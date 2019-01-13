@@ -1,0 +1,156 @@
+* {
+  box-sizing: border-box;
+}
+
+/* Clearfix */
+header::before,
+header::after {
+  display: table;
+  content: '';
+}
+
+header::after {
+  clear: both;
+}
+
+.col-3, .col-4, .col-6, .col-12 {
+  float: left;
+  padding-left: 1.04166666%;
+  padding-right: 1.04166666%;
+}
+
+/*Mobile*/
+.col-3, .col-4, .col-6, .col-12 {
+  width: 100%;
+}
+
+nav {
+  background-color: #0EABE1;
+  margin: 0;
+  overflow: hidden;
+  color: white;
+}
+
+.navTabs {
+  width: 100%;
+}
+
+.navTabs li {
+  list-style-type: none;
+  display: inline;
+  margin: 10px;
+}
+
+.navTabs li a {
+  text-decoration: none;
+  color: white;
+}
+ 
+.navTabs li a:hover {
+  color: blue;
+}
+
+nav h1 {
+  text-align: center;
+  font-size: 24px; 
+}
+
+form {
+  margin: 0 auto;
+}
+
+form h2, h3 {
+  font-size: 18px;
+  text-align: center;
+  padding: 8px;
+  background-color: #1CCD7D;
+  color: white;
+}
+
+fieldset {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.js-query {
+  border-radius: 5px; 
+  margin: 5px;
+}
+
+label, input {
+  display: inline-block;
+}
+
+label {
+  width: 30%;
+  text-align: right;
+  color: #3A403D;
+}
+
+label + input {
+  width: 30%;
+  margin: 0 30% 0 4%;
+}
+
+.js-query {
+  padding: 4px;
+  width: 150px;
+}
+
+button {
+  margin: 3px;
+  width: 100px;
+  border: none;
+  background: #404040;
+  color: #ffffff !important;
+  font-weight: 100;
+  padding: 15px;
+  text-transform: uppercase;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+button:hover {
+  color: #404040 !important;
+  font-weight: 700 !important;
+  letter-spacing: 3px;
+  background: none;
+  box-sizing: border-box;
+  transition: all 0.3s ease 0s;
+}
+
+#addButton {
+  float: left;
+}
+
+#cancelButton {
+  float: right;
+}
+
+#updateButton {
+  float: left;
+}
+
+.bookList {
+  color: #3A403D;
+  width: 80%;
+  margin: 0 auto;
+}
+
+@media only screen and (min-width: 640px) {
+  .col-3 {
+    width: 25%;
+  }
+  
+  .col-4 {
+    width: 33.3333333%;
+  }
+
+  .col-6 {
+    width: 50%;
+  }
+
+  .col-12 {
+    width: 100%;
+  }
+}

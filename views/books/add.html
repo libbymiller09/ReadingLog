@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Reader's Log</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="../index.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../float.grid.css" rel="stylesheet" type="text/css" /> 
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+  </head>
+  <body>
+    <main role="main" aria-live="polite">
+      <header role="banner">
+        <nav>
+          <ul class="navTabs">
+            <li><a href="/">Home</a></li>
+            <li><a href="/books/add">Add Book</a></li>
+            <li><a href="/books/update">Update</a></li>
+
+            <li><a href="/users/login">Login</a></li>
+            <li><a href="/users/register">Register</a></li>
+          </ul>
+
+          <div class="navBar"><h1>Reader's Log Profile</h1></div>
+        </nav>
+      </header>
+
+      <section class="addForm">
+        <form action="/books" class="add-form" method="POST">
+          <fieldset name="addForm">
+            <legend></legend>
+            <h2>Add a new book</h2>
+
+            <label for="title">Title: </label>
+            <input
+              type="text"
+              id="title"
+              class="js-query"
+              placeholder="The Giver"
+              role="alert"
+              aria-live="assertive"
+            />
+
+            <br />
+
+            <label for="author">Author: </label>
+            <input
+              type="text"
+              id="author"
+              class="js-query"
+              placeholder="Lois Lowry"
+              role="alert"
+              aria-live="assertive"
+            />
+
+            <br />
+
+            <label for="genre">Genre: </label>
+            <input
+              type="text"
+              id="genre"
+              class="js-query"
+              placeholder="fiction"
+              role="alert"
+              aria-live="assertive"
+            />
+
+            <br />
+
+            <h2>Set a goal</h2>
+
+            <label for="pages">Pages: </label>
+            <input
+              type="text"
+              id="pages"
+              class="js-query"
+              placeholder="100 pages"
+              role="alert"
+              aria-live="assertive"
+            />
+
+            <br />
+
+            <h3>Or</h3>
+
+            <label for="chapters">Chapters: </label>
+            <input
+              type="text"
+              id="chapters"
+              class="js-query"
+              placeholder="2 chapters"
+              role="alert"
+              aria-live="assertive"
+            />
+            <br>
+
+            <button type="submit" id="addButton" role="button">Add</button>
+
+            <button type="submit" id="cancelButton" role="button">
+              Cancel
+            </button>
+
+            <br />
+          </fieldset>
+        </form>
+      </section>
+      <script
+        src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"
+      ></script>
+      <script src="client.js"></script>
+    </main>
+    <footer role="contentinfo">
+      Created by
+      <a href="http://github.com/libbymiller09?tab=repositories"
+        >Elisabeth Miller</a
+      >
+      2018
+    </footer>
+  </body>
+</html>
