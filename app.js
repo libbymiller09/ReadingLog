@@ -1,5 +1,7 @@
 const express = require('express');
 const path = require('path');
+const flash = require('connect-flash');
+const session = require('express-session');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
@@ -11,7 +13,7 @@ const books = require('./routes/books');
 const users = require('./routes/users');
 
 //passport configuration
-// require('./config/passport')(passport);
+require('./config/passport')(passport);
 
 mongoose.Promise = global.Promise;
 let uri = 'mongodb://libbymiller:pirate22@ds155097.mlab.com:55097/readerslog-db';
@@ -24,12 +26,29 @@ mongoose.connect(uri)
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+//static folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+//express session middleware
+app.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true,
+}));
+
 //passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
-//static folder
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(flash());
+
+app.use(function(req, res, next){
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  res.locals.user = req.user || null;
+  next();
+});
 
 
 //index.html route--main page load

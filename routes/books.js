@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const { runServer, closeServer } = require('../app');
 
 //load mongoose schema for books
-const { BookS } = require("../models/Book");
+const { books } = require("../models/Book");
 const Book = mongoose.model("books");
 
 //middleware for the bodyparser
@@ -16,6 +16,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 let urlencodedParser = bodyParser.json();
 
+//add ensure authenticated once finshed to all routes for books
 // route for get request--all books page
 router.get("/", (req, res) => {
   Book.find()
@@ -59,28 +60,42 @@ router.post("/", (req, res) => {
 
 //process update form
 router.put("/:id", (req, res) => {
-    if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-      const message =
-        `Request path id (${req.params.id}) and request body id ` +
-        `(${req.body.id}) must match`;
-      console.error(message);
-      return res.status(400).json({ message: message });
+  Book.findOne({
+    _id: req.params.id
+  })
+  .then(book => {
+    if(book.user != req.user.id){
+      req.flash('error_msg', 'Not authorized');
+      res.redirect('/books');
+    } else {
+      res.redirect('/update', {
+        book: book
+      });
     }
-    const toUpdate = {};
-    const updateableFields = ["goalPages", "goalChapters"];
-  
-    updateableFields.forEach(field => {
-      if (field in req.body) {
-        toUpdate[field] = req.body[field];
-      }
-    });
-  
-    Book
-      .findOneAndUpdate(req.params.id, { $set: toUpdate })
-      .then(book => res.status(204).end())
-      .catch(err => res.status(500).json({ message: "Internal server error" }));
-      console.log(Book);
   });
+});
+  //   if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+  //     const message =
+  //       `Request path id (${req.params.id}) and request body id ` +
+  //       `(${req.body.id}) must match`;
+  //     console.error(message);
+  //     return res.status(400).json({ message: message });
+  //   }
+  //   const toUpdate = {};
+  //   const updateableFields = ["goalPages", "goalChapters"];
+  
+  //   updateableFields.forEach(field => {
+  //     if (field in req.body) {
+  //       toUpdate[field] = req.body[field];
+  //     }
+  //   });
+  
+  //   Book
+  //     .findOneAndUpdate(req.params.id, { $set: toUpdate })
+  //     .then(book => res.status(204).end())
+  //     .catch(err => res.status(500).json({ message: "Internal server error" }));
+  //     console.log(Book);
+  // });
 
 
 router.delete("/:id", (req, res) => {

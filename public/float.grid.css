@@ -78,6 +78,7 @@ form h2, h3 {
 fieldset {
   margin-left: 10px;
   margin-right: 10px;
+  border: none;
 }
 
 .js-query {

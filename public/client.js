@@ -78,16 +78,19 @@ function handleBooksDelete() {
 // PUT request for book
 function updateBook(book) {
   let id = updatedBook.id;
+  console.log(updateBook.id);
   $.ajax({
     url: BOOK_URL + "/" + id,
     method: "PUT",
     data: JSON.stringify(updatedBook),
     success: function(data) {
       getAndDisplayBooks();
+      console.log("working");
     },
     dataType: "json",
     contentType: "application/json"
   });
+  console.log("now");
   // window.location.href = "/";
 }
 
@@ -95,16 +98,28 @@ function updateBook(book) {
 function handleBooksUpdate() {
   $(".update-form").on("click", ".updatingButton", function(e) {
     e.preventDefault();
-    const book = document.getElementsByClassName('new-book');
-    const id = $("#id").val(); 
-    const books = {};
-    updatedBook.title = book.title
-    updatedBook.author = book.author
-    updatedBook.genre = book.genre
-    updatedBook.goalPages = $("#pages").val();
-    updatedBook.goalChapters = $("#chapters").val();
-    const updatedBooks = books.push(updatedBook);
+    updateBook({
+      title: updatedBook.title,
+      author: updatedBook.author,
+      genre: updatedBook.genre,
+      goalPages: updatedBook.goalPages,
+      goalChapters: updatedBook.goalChapters
+    });
   });
+  //     $(e.currentTarget)
+  //     .closest(".new-book")
+  //     .attr("id")
+  //   )
+  //   const book = document.getElementsByClassName('new-book');
+  //   const id = $("#id").val(); 
+  //   const books = {};
+  //   updatedBook.title = book.title
+  //   updatedBook.author = book.author
+  //   updatedBook.genre = book.genre
+  //   updatedBook.goalPages = $("#pages").val();
+  //   updatedBook.goalChapters = $("#chapters").val();
+  //   const updatedBooks = books.push(updatedBook);
+  // });
 };
 
 //event handler for update button to pull up update form

@@ -22,6 +22,10 @@ const BookSchema = new Schema({
   goalChapters: {
     type: String,
     required: false
+  },
+  user: {
+    type: String,
+    required: true
   }
 });
 

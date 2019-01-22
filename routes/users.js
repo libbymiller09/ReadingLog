@@ -23,7 +23,8 @@ router.post('/login', (req, res, next) => {
   passport.authenticate('local', {
     successRedirect: '/books',
       failureRedirect: '/users/login',
-  })
+      failureFlash: true
+  })(req, res, next);
 });
 
 // register form POST
@@ -82,6 +83,7 @@ router.post('/register', (req, res) => {
 // Logout the user
 router.get('/logout', (req, res) => {
   req.logout();
+  req.flash('success_msg', 'You are logged out');
   req.redirect('/users/login');
 });
 
