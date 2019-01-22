@@ -2,12 +2,16 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const passport = require('passport');
 
 const app = express();
 
 //load routes
 const books = require('./routes/books');
 const users = require('./routes/users');
+
+//passport configuration
+// require('./config/passport')(passport);
 
 mongoose.Promise = global.Promise;
 let uri = 'mongodb://libbymiller:pirate22@ds155097.mlab.com:55097/readerslog-db';
@@ -20,8 +24,13 @@ mongoose.connect(uri)
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+//passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 //static folder
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 //index.html route--main page load
 app.get('/', (req, res) => {

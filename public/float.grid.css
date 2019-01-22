@@ -31,28 +31,36 @@ nav {
   color: white;
 }
 
-.navTabs {
+.navTabs, .navUserTabs {
   width: 100%;
 }
 
 .navTabs li {
+  float: left;
+}
+
+.navUserTabs li {
+  float: right;
+}
+
+.navTabs li, .navUserTabs li {
   list-style-type: none;
   display: inline;
   margin: 10px;
 }
 
-.navTabs li a {
+.navTabs li a, .navUserTabs li a {
   text-decoration: none;
   color: white;
 }
  
-.navTabs li a:hover {
-  color: blue;
+.navTabs li a:hover, .navUserTabs li a:hover {
+  color: darkblue;
 }
 
-nav h1 {
+h1 {
   text-align: center;
-  font-size: 24px; 
+  font-size: 20px; 
 }
 
 form {
@@ -104,6 +112,7 @@ button {
   background: #404040;
   color: #ffffff !important;
   font-weight: 100;
+  font-size: 18px;
   padding: 15px;
   text-transform: uppercase;
   border-radius: 6px;
@@ -125,6 +134,7 @@ button:hover {
 
 #cancelButton {
   float: right;
+  height: 58px;
 }
 
 #updateButton {

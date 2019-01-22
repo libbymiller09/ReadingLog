@@ -1,166 +1,135 @@
-// //mock data for testing API
-// let MOCK_PROFILE = {
-//   "books": [
-//     {
-//       "id": "1111111",
-//       "title": "Harry Potter and the Sorcerer's Stone",
-//       "author": "J.K. Rowling",
-//       "genre": "fantasy",
-//       "goalPages": "100 pages",
-//       "goalChapters": "2 chapters" 
-//     },
-//     {
-//       "id": "1111112",
-//       "title": "The Lord of the Rings and the Fellowship of the Ring",
-//       "author": "J.R.R. Tolkien",
-//       "genre": "science-fiction",
-//       "goalPages": "30 pages",
-//       "goalChapters": "4 chapters"
-//     }
-//   ]
-// };
+const serverBase = "//localhost:5050/";
+const BOOK_URL = serverBase + "books";
 
-let serverBase = "//localhost:3030/";
-let BOOK_URL = serverBase + "books";
-
-// const books = [];
-
-// const newBooks = books.push(title, author, genre, goalPages, goalChapters);
-
-// get main book page data
-function getBookProfile() {
-  // setTimeout(function() { callback(MOCK_PROFILE)}, 100);
-  // const query = {
-  //   title : document.getElementById("title").value,
-  //   author : document.getElementById("author").value,
-  //   genre : document.getElementById("genre").value,
-  //   goalPages : document.getElementById("goals").value,
-  //   goalChapters : document.getElementById("chapters").value
-  // };
-
-  return $.ajax({
-    url: BOOK_URL,
-    method: "GET",
-    dataType: "json",
-    data: JSON.stringify(),
-    contentType: "application/json",
-    success: response => getAndDispalyBookProfile(response)
+// main GET request to display all the current books
+function getAndDisplayBooks() {
+  $.getJSON(BOOK_URL, function(books) {
+    console.log(books);
+    for (let i = 0; i < books.books.length; i++) {
+      $('.bookList').append(
+        '<div class="new-book">' +
+          '<p>' + books.books[i].title + " by " + books.books[i].author + '</p>' + 
+          '<p>' + "Genre: " +  books.books[i].genre + '</p>' +
+          '<p>' + "Goal: " + books.books[i].goalPages + " pages " + " or " +  books.books[i].goalChapters + " chapters " + '</p>' +
+          '<button type="button" class="updateButton" role="button"><i class="material-icons">create</i></button>' +
+          '<button type="button" class="deleteButton" role="button"><i class="material-icons">delete</></button>' +
+        '</div>');
+        document.querySelector(".new-book").setAttribute("id", books.books[i]._id);
+    } 
   });
-  console.log(response);
 }
 
-// display book data
-function displayBookProfile(response) {
-  for (index in response.books) {
-    $('.bookList').append(
-      '<p>' + response.books[index].title + " by " + response.books[index].author + '</p>' + 
-      '<p>' + "Genre: " +  response.books[index].genre + '</p>' +
-      '<p>' + "Goal: " + response.books[index].goalPages + " or " +  response.books[index].goalChapters + '</p>' +
-      '<button type="button" class="updateButton" role="button">Update</button>' +
-      '<button type="button" class="deleteButton" role="button">Delete</button>');
-  }
-  console.log(response);
+// POST request to add a new book
+function addBooks(book) {
+  let item = $('js-query');
+  let book = {item: item.val()};
+
+  $.ajax({
+    method: "POST",
+    url: BOOK_URL,
+    data: JSON.stringify(book),
+    success: function(data) {
+      getAndDisplayBooks();
+    },
+    dataType: "json",
+    contentType: "application/json"
+  });
 }
 
-// request and display data 
-function getAndDispalyBookProfile() {
-  getBookProfile(displayBookProfile);
+//event handler for submit of add form
+function handleBooksAdd() {
+  $("#addButton").on("submit", (function(e) {
+    e.preventDefault();
+    const books = {};
+    newBook.title = $("#title").val();
+    newBook.author = $("#author").val();
+    newBook.genre = $("#genre").val();
+    newBook.goalPages = $("#pages").val();
+    newBook.goalChapters = $("#chapters").val();
+    const allBooks = books.push(newBook);
+  })
+  );
 }
 
-// //need event handlers for buttons
-// function addBook(book) {
-//   $.ajax({
-//     method: "POST",
-//     url: BOOK_URL,
-//     data: JSON.stringify(book),
-//     success: function(data) {
-//       getAndDisplaybookEntry();
-//     },
-//     dataType: "json",
-//     contentType: "application/json"
-//   });
-// }
+// DELETE request for book
+function deleteBook() {
+  let book = document.getElementsByClassName('new-book');
+  let id = book.id;
+  $.ajax({
+    url: BOOK_URL + "/" + id,
+    method: "DELETE",
+    success: console.log('book deleted')
+  });
+  window.location.href = "/";
+}
 
-// //handler for adding books on submission of add-form
-// // function handleBookAdd() {
-// //   $(".add-form").submit(function(e) {
-// //     e.preventDefault();
-// //     addBooks({
-      
-// //       // title: $(e.currentTarget)
-// //       //   .find(".js-query")
-// //       //   .val(),
-// //     });
-// //   });
-// // }
+//event handler for the delete button
+function handleBooksDelete() {
+  $(".bookList").on("click", ".deleteButton", function(e) {
+    e.preventDefault();
+    deleteBook(
+      $(e.currentTarget)
+        .closest(".new-book")
+        .attr("id")
+    );
+  });
+}
 
-// function handleBookAdd() {
-//   $(".add-form").submit(function(e) {
-//     e.preventDefault();
-  
-//     // let title = document.getElementById("title").value;
-//     // let author = document.getElementById("author").value;
-//     // let genre = document.getElementById("genre").value;
-//     // let goalPages = document.getElementById("goals").value;
-//     // let goalChapters = document.getElementById("chapters").value;
+// PUT request for book
+function updateBook(book) {
+  let id = updatedBook.id;
+  $.ajax({
+    url: BOOK_URL + "/" + id,
+    method: "PUT",
+    data: JSON.stringify(updatedBook),
+    success: function(data) {
+      getAndDisplayBooks();
+    },
+    dataType: "json",
+    contentType: "application/json"
+  });
+  // window.location.href = "/";
+}
 
-//     // let books = [];
-//     // let newBooks = books.push(title, author, genre, goalPages, goalChapters);
-//     // console.log(newBooks);
-//   });
-// }
+// event handler for update button on form submission
+function handleBooksUpdate() {
+  $(".update-form").on("click", ".updatingButton", function(e) {
+    e.preventDefault();
+    const book = document.getElementsByClassName('new-book');
+    const id = $("#id").val(); 
+    const books = {};
+    updatedBook.title = book.title
+    updatedBook.author = book.author
+    updatedBook.genre = book.genre
+    updatedBook.goalPages = $("#pages").val();
+    updatedBook.goalChapters = $("#chapters").val();
+    const updatedBooks = books.push(updatedBook);
+  });
+};
 
-// //function for updating book entries
-// function updateBooks(book) {
-//   $.ajax({
-//     url: BOOK_URL + "/" + book.id,
-//     method: "PUT",
-//     data: book,
-//     success: function(data) {
-//       getAndDisplaybookEntry();
-//     }
-//   });
-// }
+//event handler for update button to pull up update form
+function handleUpdateButton() {
+  $(".bookList").on("click", ".updateButton", function(e) {
+    e.preventDefault();
+    window.location.href = "/books/update";
+  });
+}
 
-// //function for deleting book
-// function deleteBook(id) {
-//   $.ajax({
-//     url: BOOK_URL + "/" +book.id,
-//     method: "DELETE",
-//     success: getAndDisplaybookEntry
-//   });
-// }
+//event handler for the cancel button
+function handleCancelButton() {
+  $('.addForm').on("click", ".cancelButton", function(e) {
+    event.preventDefault();
+    window.location.href = "/"
+  });
+}
 
-// //event listener for delete button
-// function handleDelete() {
-//   $(".deleteButton").on("click", ".deleteButton", function(e) {
-//     e.preventDefault();
-//     deleteBook(
-//       $(e.currentTarget)
-//       .attr("id")
-//     );
-//   });
-// }
-
-// //event listener for cancel button 
-// function handleCancelButton() {
-//   $("#cancelButton").on("click", "#cancelButton", function(e) {
-//     e.preventDefault();
-//     getAndDispalyBookProfile();
-//   })
-// }
- 
-// //when the page loads
-// $(function() {
-//   getAndDispalyBookProfile();
-//   handleDelete();
-//   handleBookAdd();
-
-//   handleCancelButton();
-// })
-
-
-//on page load run this function
 $(function() {
-  getAndDispalyBookProfile();
-})
+  getAndDisplayBooks();
+  handleBooksAdd();
+
+  handleBooksDelete();  
+  handleBooksUpdate();
+  
+  handleUpdateButton();
+  handleCancelButton();
+});

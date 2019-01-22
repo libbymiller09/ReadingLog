@@ -11,6 +11,8 @@
       href="https://fonts.googleapis.com/css?family=Karla"
       rel="stylesheet"
     />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     
   </head>
   <body>
@@ -18,10 +20,11 @@
       <header role="banner">
         <nav>
           <ul class="navTabs">
-            <li><a href="/">Home</a></li>
-            <li><a href="/books/add">Add Book</a></li>
-            <li><a href="/books/update">Update</a></li>
-
+            <li><a href="/"><i class="material-icons">home</i></a></li>
+            <li><a href="/books/add"><i class="material-icons">add</i></a></li>
+            <li><a href="/books/update"><i class="material-icons">create</i></a></li>
+          </ul>
+          <ul class="navUserTabs">
             <li><a href="/users/login">Login</a></li>
             <li><a href="/users/register">Register</a></li>
           </ul>
@@ -48,19 +51,11 @@
           </form>
         </div>
       </section>
-      <script
-        src="https://code.jquery.com/jquery-3.3.1.js"
-        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-        crossorigin="anonymous"
-      ></script>
-      <script src="client.js"></script>
+      <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="crossorigin="anonymous"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script type="text/javascript" src="client.js"></script>
     </main>
-    <footer role="contentinfo">
-      Created by
-      <a href="http://github.com/libbymiller09?tab=repositories"
-        >Elisabeth Miller</a
-      >
-      2018
+    <footer role="contentinfo">Created by <a href="http://github.com/libbymiller09?tab=repositories">Elisabeth Miller</a>2018
     </footer>
   </body>
 </html>

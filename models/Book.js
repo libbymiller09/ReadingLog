@@ -15,11 +15,11 @@ const BookSchema = new Schema({
     type: String,
     required: false
   },
-  goalsPages: {
+  goalPages: {
     type: String,
     required: false
   },
-  goalsChapters: {
+  goalChapters: {
     type: String,
     required: false
   }

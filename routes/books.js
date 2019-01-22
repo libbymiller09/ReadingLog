@@ -5,49 +5,27 @@ const path = require("path");
 const { ObjectID } = require("mongodb");
 const bodyParser = require('body-parser');
 
+const { runServer, closeServer } = require('../app');
 
 //load mongoose schema for books
-require("../models/Book");
+const { BookS } = require("../models/Book");
 const Book = mongoose.model("books");
 
 //middleware for the bodyparser
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
+let urlencodedParser = bodyParser.json();
 
-//book index page
-
-//need to find a way to save the response data
-//from here and export it to client.js file
-//or write a similar function in client.js file
-
+// route for get request--all books page
 router.get("/", (req, res) => {
   Book.find()
     .then(books => {
-      res.sendFile("index.html", { root: "./views/" });
-    });
+      res.json({ books })
+    }, (e) => {
+      res.status(400).send(e)
+    })
 });
 
-// router.get("/", (req, res) => {
-//   Book.find().then(books => {
-//     res.json(
-//       books.map(book => {
-//         return {
-//           id: book._id,
-//           title: book.title,
-//           author: book.author,
-//           genre: book.genre,
-//           goalPages: book.goalPages,
-//           goalChapters: book.goalChapters
-//         };
-//       })
-//     );
-//   });
-//   // .then()
-//   // res.sendFile('index.html', { root: './views' })
-//   // .catch(err => {
-//   //   console.error(err);
-//   // })
-// });
 
 // route to add book form
 router.get("/add", (req, res) => {
@@ -64,48 +42,58 @@ router.get("/update", (req, res) => {
   });
 });
 
-//process form
+//Post request for add form
 router.post("/", (req, res) => {
-  let newBook = new Book({
-    title: req.body.title,
-    author: req.body.author,
-    genre: req.body.genre,
-    goalPages: req.body.goalPages,
-    goalChapters: req.body.goalChapters
-  });
-  newBook.save().then(book => {
-    // res.send(book);
-    res.redirect("/books");
-  });
+  
+ const book = new Book({
+   title: req.body.title,
+   author: req.body.author,
+   genre: req.body.genre,
+   goalPages: req.body.goalPages,
+   goalChapters: req.body.goalChapters
+ });
+ console.log(req.body);
+ book.save()
+  res.redirect('/');
 });
 
 //process update form
 router.put("/:id", (req, res) => {
-  let id = req.params.id;
-  if (!ObjectID.isValid(id)) {
-    return res.status(404).send();
-  }
-  Book.findByIdAndUpdate({
-    title: req.body.title,
-    author: req.body.author,
-    genre: req.body.genre,
-    goalPages: req.body.goalPages,
-    goalChapters: req.body.goalChapters
+    if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+      const message =
+        `Request path id (${req.params.id}) and request body id ` +
+        `(${req.body.id}) must match`;
+      console.error(message);
+      return res.status(400).json({ message: message });
+    }
+    const toUpdate = {};
+    const updateableFields = ["goalPages", "goalChapters"];
+  
+    updateableFields.forEach(field => {
+      if (field in req.body) {
+        toUpdate[field] = req.body[field];
+      }
+    });
+  
+    Book
+      .findOneAndUpdate(req.params.id, { $set: toUpdate })
+      .then(book => res.status(204).end())
+      .catch(err => res.status(500).json({ message: "Internal server error" }));
+      console.log(Book);
   });
-  book.save().then(book => {
-    res.redirect("/books");
-  });
-});
+
 
 router.delete("/:id", (req, res) => {
-  let id = req.params.id;
-
-  if (!ObjectID.isValid(id)) {
-    return res.status(404).send();
-  }
-  Book.findByIdAndRemove(id).then(() => {
-    res.redirect("/books");
-  });
+  Book  
+    .findOneAndDelete(req.params.id)
+    .then(() => {
+      res.status(204).json({ message: 'success' });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'not successful' });
+    });
 });
+
 
 module.exports = router;

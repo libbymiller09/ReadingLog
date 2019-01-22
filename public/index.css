@@ -3,6 +3,27 @@
   font-size: 16px;
 }
 
+nav {
+  background: #B993D6;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #8CA6DB, #B993D6);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #8CA6DB, #B993D6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  border-radius: 5px;
+}
+
+body {
+  background: #83a4d4;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #b6fbff, #83a4d4); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+}
+
+form h2, h3 {
+  background: #4b6cb7;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #182848, #4b6cb7);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #182848, #4b6cb7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  border-radius: 5px;
+}
+
+
 /* nav {
   background-color: #0EABE1;
   margin: 0;
@@ -107,6 +128,16 @@ button {
   width: 80%;
   margin: 0 auto;
 } */
+
+
+.cancelButton {
+  height: 58px;
+  float: right;
+}
+
+.updatingButton {
+  float: left;
+}
 
 footer, footer a {
   text-align: right;
