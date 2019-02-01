@@ -25,7 +25,7 @@ const BookSchema = new Schema({
   },
   user: {
     type: String,
-    required: true
+    required: false
   }
 });
 

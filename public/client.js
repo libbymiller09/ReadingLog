@@ -52,28 +52,37 @@ function handleBooksAdd() {
 }
 
 // DELETE request for book
-function deleteBook() {
-  let book = document.getElementsByClassName('new-book');
-  let id = book.id;
-  $.ajax({
-    url: BOOK_URL + "/" + id,
-    method: "DELETE",
-    success: console.log('book deleted')
-  });
-  window.location.href = "/";
-}
+// function deleteBook() {
+//   // let book = document.getElementsByClassName('new-book');
+//   // let id = book.id;
+//   const id = $(e.target).parent().attr("id");
+//   $.ajax({
+//     url: BOOK_URL + "/" + id,
+//     method: "DELETE",
+//     success: console.log('book deleted')
+//   });
+//   window.location.href = "/";
+// }
 
 //event handler for the delete button
 function handleBooksDelete() {
   $(".bookList").on("click", ".deleteButton", function(e) {
     e.preventDefault();
-    deleteBook(
-      $(e.currentTarget)
-        .closest(".new-book")
-        .attr("id")
-    );
-  });
+
+    const id = $(e.target).parent().attr("id");
+
+    $.ajax({
+      url: BOOK_URL + "/" + id,
+      method: "DELETE",
+      success: console.log('book deleted')
+    });
+    window.location.href = "/";
+  })
 }
+    // let deletedBook = document.getElementsByClassName('new-book');
+    // deleteBook();
+  // });
+// }
 
 // PUT request for book
 function updateBook(book) {
@@ -81,7 +90,7 @@ function updateBook(book) {
   console.log(updateBook.id);
   $.ajax({
     url: BOOK_URL + "/" + id,
-    method: "PUT",
+    method: "PATCH",
     data: JSON.stringify(updatedBook),
     success: function(data) {
       getAndDisplayBooks();

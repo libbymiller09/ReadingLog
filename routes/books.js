@@ -60,53 +60,51 @@ router.post("/", (req, res) => {
 
 //process update form
 router.put("/:id", (req, res) => {
-  Book.findOne({
-    _id: req.params.id
-  })
-  .then(book => {
-    if(book.user != req.user.id){
-      req.flash('error_msg', 'Not authorized');
-      res.redirect('/books');
-    } else {
-      res.redirect('/update', {
-        book: book
-      });
+    if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+      const message =
+        `Request path id (${req.params.id}) and request body id ` +
+        `(${req.body.id}) must match`;
+      console.error(message);
+      return res.status(400).json({ message: message });
     }
+    const toUpdate = {};
+    const updateableFields = ["goalPages", "goalChapters"];
+  
+    updateableFields.forEach(field => {
+      if (field in req.body) {
+        toUpdate[field] = req.body[field];
+      }
+    });
+  
+    Book
+      // .findByIdAndUpdate(req.params.id)
+      .findOneAndUpdate({ _id: req.params.id}, { $set: toUpdate })
+      .then(book => res.status(204).end())
+      .catch(err => res.status(500).json({ message: "Internal server error" }));
+      console.log(Book);
   });
-});
-  //   if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-  //     const message =
-  //       `Request path id (${req.params.id}) and request body id ` +
-  //       `(${req.body.id}) must match`;
-  //     console.error(message);
-  //     return res.status(400).json({ message: message });
-  //   }
-  //   const toUpdate = {};
-  //   const updateableFields = ["goalPages", "goalChapters"];
-  
-  //   updateableFields.forEach(field => {
-  //     if (field in req.body) {
-  //       toUpdate[field] = req.body[field];
-  //     }
-  //   });
-  
-  //   Book
-  //     .findOneAndUpdate(req.params.id, { $set: toUpdate })
-  //     .then(book => res.status(204).end())
-  //     .catch(err => res.status(500).json({ message: "Internal server error" }));
-  //     console.log(Book);
-  // });
 
+
+// router.delete("/:id", (req, res) => {
+//   Book  
+//     .findOneAndDelete(req.params.id)
+//     .then(() => {
+//       res.status(204).json({ message: 'success' });
+//     })
+//     .catch(err => {
+//       console.error(err);
+//       res.status(500).json({ error: 'not successful' });
+//     });
+// });
 
 router.delete("/:id", (req, res) => {
-  Book  
-    .findOneAndDelete(req.params.id)
+  Book.findByIdAndRemove(req.params.id)
     .then(() => {
-      res.status(204).json({ message: 'success' });
+      res.status(204).json({ message: "success, my friend!" });
     })
     .catch(err => {
       console.error(err);
-      res.status(500).json({ error: 'not successful' });
+      res.status(500).json({ error: "ughhhhhhhh no no" });
     });
 });
 
