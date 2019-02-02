@@ -51,19 +51,7 @@ function handleBooksAdd() {
   );
 }
 
-// DELETE request for book
-// function deleteBook() {
-//   // let book = document.getElementsByClassName('new-book');
-//   // let id = book.id;
-//   const id = $(e.target).parent().attr("id");
-//   $.ajax({
-//     url: BOOK_URL + "/" + id,
-//     method: "DELETE",
-//     success: console.log('book deleted')
-//   });
-//   window.location.href = "/";
-// }
-
+//DELETE request
 //event handler for the delete button
 function handleBooksDelete() {
   $(".bookList").on("click", ".deleteButton", function(e) {
@@ -79,10 +67,6 @@ function handleBooksDelete() {
     window.location.href = "/";
   })
 }
-    // let deletedBook = document.getElementsByClassName('new-book');
-    // deleteBook();
-  // });
-// }
 
 // PUT request for book
 function updateBook(book) {

@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const router = express.Router();
 const path = require("path");
 const { ObjectID } = require("mongodb");
+require('mongoose').Types.ObjectId;
 const bodyParser = require('body-parser');
 
 const { runServer, closeServer } = require('../app');
@@ -26,6 +27,26 @@ router.get("/", (req, res) => {
       res.status(400).send(e)
     })
 });
+
+// router.get("/", (req, res) => {
+//   Book.find()
+//     .then(books => {
+//       res.json(books.map(book => {
+//         return {
+//           id: books._id,
+//           title: books.title,
+//           author: books.author,
+//           genre: books.genre,
+//           goalPages: books.goalPages,
+//           goalChapters: books.goalChapters   
+//         }
+//       }))
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       res.status(500).json({message: 'Something went wrong'})
+//     })
+// });
 
 
 // route to add book form
@@ -85,28 +106,18 @@ router.put("/:id", (req, res) => {
   });
 
 
-// router.delete("/:id", (req, res) => {
-//   Book  
-//     .findOneAndDelete(req.params.id)
-//     .then(() => {
-//       res.status(204).json({ message: 'success' });
-//     })
-//     .catch(err => {
-//       console.error(err);
-//       res.status(500).json({ error: 'not successful' });
-//     });
-// });
-
 router.delete("/:id", (req, res) => {
-  Book.findByIdAndRemove(req.params.id)
+  console.log(req.params);
+  Book  
+    // .findByIdAndDelete(req.params._id)
+      .findOneAndDelete({id: req.params._id})
     .then(() => {
-      res.status(204).json({ message: "success, my friend!" });
+      res.status(204).json({ message: 'success' });
     })
     .catch(err => {
       console.error(err);
-      res.status(500).json({ error: "ughhhhhhhh no no" });
+      res.status(500).json({ error: 'not successful' });
     });
 });
-
 
 module.exports = router;

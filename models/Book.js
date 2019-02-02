@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+const {User} = require('./User');
+
 const Schema = mongoose.Schema;
 
 //create schema
@@ -24,9 +27,22 @@ const BookSchema = new Schema({
     required: false
   },
   user: {
-    type: String,
+    type: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     required: false
   }
 });
 
-mongoose.model('books', BookSchema);
+BookSchema.methods.serialize = function() {
+  return {
+    id: this._id,
+    title: this.title,
+    author: this.author,
+    genre: this.genre,
+    goalPages: this.goalPages,
+    goalChapters: this.goalChapters
+  };
+};
+
+const Books = mongoose.model('books', BookSchema);
+
+module.exports = {Books};

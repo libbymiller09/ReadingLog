@@ -1,6 +1,7 @@
+// import { DATABASE_URL } from './config/config';
+
 const express = require('express');
 const path = require('path');
-const flash = require('connect-flash');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -11,6 +12,8 @@ const app = express();
 //load routes
 const books = require('./routes/books');
 const users = require('./routes/users');
+
+const {DATABASE_URL, PORT} = require('./config/config');
 
 //passport configuration
 require('./config/passport')(passport);
@@ -40,17 +43,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(flash());
-
-app.use(function(req, res, next){
-  res.locals.success_msg = req.flash('success_msg');
-  res.locals.error_msg = req.flash('error_msg');
-  res.locals.error = req.flash('error');
-  res.locals.user = req.user || null;
-  next();
-});
-
-
 //index.html route--main page load
 app.get('/', (req, res) => {
   res.sendFile(__dirname + "/views/index.html");
@@ -64,42 +56,50 @@ app.use('/users', users);
 let server;
 
 // starts the server
-function runServer() {
-  const port = process.env.PORT || 5050;
+function runServer(DATABASE_URL) {
+  const port = PORT;
   return new Promise((resolve, reject) => {
-    server = app
-      .listen(port, () => {
-        console.log(`server running on ${port}`);
-        resolve(server);
-      })
-      .on("error", err => {
-        reject(err);
-      });
+    mongoose.connect(DATABASE_URL, err => {
+      if(err) {
+        return reject(err);
+      }
+      server = app
+        .listen(port, () => {
+          console.log(`server running on ${port}`);
+          resolve();
+        })
+        .on("error", err => {
+          mongoose.disconnect();
+          reject(err);
+        });
+    });
   });
 }
 
 // closes the server
 function closeServer() {
-  return new Promise((resolve, reject) => {
-    console.log("closing server");
-    server.close(err => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve();
+  return mongoose.disconnect().then(() => {
+    return new Promise((resolve, reject) => {
+      console.log("closing server");
+      server.close(err => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve();
+      })
     });
   });
 }
 
-const port = 5050;
+// const port = 5050;
 
-app.listen(port, () => {
-  console.log(`Server started on port ${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Server started on port ${port}`);
+// });
 
-// if (require.main === module) {
-//   runServer(DATABASE_URL).catch(err => console.error(err));
-// };
+if (require.main === module) {
+  runServer(DATABASE_URL).catch(err => console.error(err));
+};
 
 module.exports = { app, runServer, closeServer };
