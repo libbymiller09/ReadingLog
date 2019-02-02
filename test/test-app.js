@@ -27,11 +27,11 @@ function seedBookData() {
   const seedData = [];
   for (let i = 1; i<=10; i++) {
     seedData.push({
-      title: faker.lorem.word(),
-      author: faker.name.findName(),
-      genre: faker.lorem.word(),
-      goalPages: faker.lorem.word(),
-      goalChapters: faker.lorem.word()
+      title: 'Harry Potter and the Chamber of Secrets',
+      author: 'J.K. Rowling',
+      genre: 'fantasy',
+      goalPages: '33',
+      goalChapters: '3'
     });
   }
   return Book.insertMany(seedData);
@@ -47,13 +47,13 @@ describe('Books API resource', () => {
     return runServer(databaseUrl);
   });
 
-  beforeEach(function() {
-    return seedBookData();
-  });
+  // beforeEach(function() {
+  //   return seedBookData();
+  // });
 
-  afterEach(function() {
-    return tearDownDb();
-  });
+  // afterEach(function() {
+  //   return tearDownDb();
+  // });
 
   after(function () {
     return closeServer();
