@@ -68,20 +68,10 @@ function handleBooksDelete() {
   })
 }
 
-// PUT request for book
-// function updateBook(book) {
-//   console.log("updating book `" + book.id + "`");
-//   $.ajax({
-//     url: BOOK_URL + "/" + id,
-//     method: "PUT",
-//     data: book,
-//     success: function(data) {
-//       getAndDisplayBooks();
-//     }
-//   });
-// }
-
 function updateBook(book) {
+  let item = $('js-query');
+  let book = {item: item.val()};
+
   console.log("updating book `" + book.id + "`");
   $.ajax({
     url: BOOK_URL + "/" + book.id,
@@ -100,11 +90,11 @@ function handleBooksUpdate() {
     e.preventDefault();
     let updateFormData = {
       id: bookId,
-      title: $('input[name="title"]').val(),
-      author: $('input[name="author"]').val(),
-      genre: $('input[name="genre"]').val(),
-      goalPages: $('input[name="goalPages"]').val(),
-      goalChapters: $('input[name="goalChapters"]').val(),
+      title: $('input[id="title"]').val(),
+      author: $('input[id="author"]').val(),
+      genre: $('input[id="genre"]').val(),
+      goalPages: $('input[id="pages"]').val(),
+      goalChapters: $('input[id="chapters"]').val(),
     };
     updateBook(updateFormData);
   })

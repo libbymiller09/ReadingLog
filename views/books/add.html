@@ -16,15 +16,8 @@
       <header role="banner">
         <nav>
           <ul class="navTabs">
-            <li>
-              <a href="/"><i class="material-icons">home</i></a>
-            </li>
-            <li>
-              <a href="/books/add"><i class="material-icons">add</i></a>
-            </li>
-            <li>
-              <!-- <a href="/books/update"><i class="material-icons">create</i></a> -->
-            </li>
+            <li><a href="/"><i class="material-icons">home</i></a></li>
+            <li><a href="/books/add"><i class="material-icons">add</i></a></li>
           </ul>
           <ul class="navUserTabs">
             <li><a href="/users/login">Login</a></li>
@@ -34,16 +27,15 @@
           <div class="navBar"><h1>Reader's Log Profile <i class="fas fa-book-open"></i></h1></div>
         </nav>
       </header>
-
       <section class="addForm">
         <form action="/books" class="add-form" method="POST">
           <fieldset name="addForm">
             <legend></legend>
+
             <h2>Add a new book</h2>
 
             <label for="title">Title: </label>
-            <input
-              type="text" name="title" id="title" class="js-query" placeholder="The Giver" role="alert" aria-live="assertive" value=""/>
+            <input type="text" name="title" id="title" class="js-query" placeholder="The Giver" role="alert" aria-live="assertive" />
 
             <br />
 
@@ -70,9 +62,7 @@
             <input type="text" name="goalChapters" id="chapters" class="js-query" placeholder="2 chapters" role="alert" aria-live="assertive"/>
             <br />
 
-            <button type="submit" id="addButton" role="button">
-              <i class="material-icons">add</i>
-            </button>
+            <button type="submit" id="addButton" role="button"><i class="material-icons">add</i></button>
 
             <button type="button" class="cancelButton" role="button">Cancel</button>
 
