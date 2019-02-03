@@ -26,27 +26,20 @@ describe('GET endpoint', function() {
 
 describe('POST endpoint', function() {
   it('should add a new book', function() {
-    const newBookEntry = {
-      book_id: book._id, 
-      title : faker.lorem.words(),
-      author : faker.lorem.words(),
-      genre : faker.lorem.word(),
-      goalPages : faker.lorem.word(),
-      goalChapters : faker.lorem.word()
-    };
+    let book = {
+      // book_id: book._id, 
+      title : 'new title',
+      author : 'new author',
+      genre : 'new genre',
+      goalPages : 'new goalPages',
+      goalChapters : 'new goalChapters'
+    }
     return chai.request(app)
-        .post('/')
-        .send(newBookEntry)
+        .post('/books')
+        .send(book)
         .then(function(res) {
-          console.log(res.body);
           expect(res).to.have.status(200);
-          return Books.findById(res.body.id);
-          // expect(res.body).to.be.a('object');
-          // expect(res.body).to.deep.equal(Object.assign(newBookEntry, {id: res.body.id}));
-          // done();
-        })
-        .then(book => {
-          expect(book.title).to.equal(newBookEntry.title);
+          expect(res.body).to.be.a('object');
         })
     })
 });
@@ -58,7 +51,7 @@ describe('PUT endpoint', function() {
       author: 'Lois Lowry',
       goalChapters: '4'
     };
-    return Books.findOne()
+    return Book.findOne()
       .then(book => {
         updateBook.id = book.id;
       
@@ -68,7 +61,7 @@ describe('PUT endpoint', function() {
       })
       .then(res => {
         expect(res).to.have.status(204);
-        return Books.findById(updateBook.id)
+        return Book.findById(updateBook.id)
       })
       .then(book => {
         expect(book.title).to.equal(updateBook.title);
@@ -79,14 +72,14 @@ describe('PUT endpoint', function() {
 describe('DELETE endpoint', function() {
   it('should delete a book by its id', function() {
     let book;
-    return Books.findOne()
+    return Book.findOne()
       .then(_book => {
         book = _book;
         return chai.request(app).delete(`/${book.id}`)
       })
       .then(res => {
         expect(res).to.have.status(204);
-        return Books.findById(book.id);
+        return Book.findById(book.id);
       })
       .then(_book => {
         expect(_book).to.be.null;
