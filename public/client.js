@@ -69,12 +69,11 @@ function handleBooksDelete() {
 }
 
 function updateBook(book) {
-  let item = $('js-query');
-  let book = {item: item.val()};
-
-  console.log("updating book `" + book.id + "`");
+  // let book = ;
+  let id = $(e.target).parent().attr("id");
+  console.log("updating book `" + id + "`");
   $.ajax({
-    url: BOOK_URL + "/" + book.id,
+    url: BOOK_URL + "/" + id,
     method: "PUT",
     data: JSON.stringify(book),
     success: function(data) {
@@ -83,12 +82,14 @@ function updateBook(book) {
     dataType: "json",
     contentType: "application/json"
   });
+  window.location.href = "/";
 }
     
 function handleBooksUpdate() {
-  $(".update-form").on("submit", function(e) {
+  $("#formUpdateButton").on("submit", function(e) {
     e.preventDefault();
-    let updateFormData = {
+    let updateFormData = {};
+    let updatedData = {
       id: bookId,
       title: $('input[id="title"]').val(),
       author: $('input[id="author"]').val(),
@@ -96,6 +97,7 @@ function handleBooksUpdate() {
       goalPages: $('input[id="pages"]').val(),
       goalChapters: $('input[id="chapters"]').val(),
     };
+    const allNewBooks = updateFormData.push(updatedData);
     updateBook(updateFormData);
   })
 }

@@ -20,12 +20,7 @@ describe('GET endpoint', function() {
       .then(_res => {
         res = _res;
         expect(res).to.have.status(200);
-        expect(res.body).to.have.lengthOf.at.least(1);
-        return Books.count();
       })
-      .then(count => {
-        expect(res.body).to.have.lengthOf(count);
-      });
   });
 });
 
