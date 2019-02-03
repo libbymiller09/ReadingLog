@@ -14,7 +14,7 @@ const Book = mongoose.model("books");
 
 //middleware for the bodyparser
 router.use(bodyParser.urlencoded({ extended: false }));
-router.use(bodyParser.json());
+router.use(bodyParser.json( { type: "*/*" } ));
 let urlencodedParser = bodyParser.json();
 
 //add ensure authenticated once finshed to all routes for books
@@ -27,27 +27,6 @@ router.get("/", (req, res) => {
       res.status(400).send(e)
     })
 });
-
-// router.get("/", (req, res) => {
-//   Book.find()
-//     .then(books => {
-//       res.json(books.map(book => {
-//         return {
-//           id: books._id,
-//           title: books.title,
-//           author: books.author,
-//           genre: books.genre,
-//           goalPages: books.goalPages,
-//           goalChapters: books.goalChapters   
-//         }
-//       }))
-//     })
-//     .catch(err => {
-//       console.log(err);
-//       res.status(500).json({message: 'Something went wrong'})
-//     })
-// });
-
 
 // route to add book form
 router.get("/add", (req, res) => {
@@ -81,36 +60,23 @@ router.post("/", (req, res) => {
 
 //process update form
 router.put("/:id", (req, res) => {
-    if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-      const message =
-        `Request path id (${req.params.id}) and request body id ` +
-        `(${req.body.id}) must match`;
-      console.error(message);
-      return res.status(400).json({ message: message });
+  Book.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {new: true},
+    (err, book) => {
+      if(err) return res.status(500).send(err);
+      return res.send(book);
     }
-    const toUpdate = {};
-    const updateableFields = ["goalPages", "goalChapters"];
-  
-    updateableFields.forEach(field => {
-      if (field in req.body) {
-        toUpdate[field] = req.body[field];
-      }
-    });
-  
-    Book
-      // .findByIdAndUpdate(req.params.id)
-      .findOneAndUpdate({ _id: req.params.id}, { $set: toUpdate })
-      .then(book => res.status(204).end())
-      .catch(err => res.status(500).json({ message: "Internal server error" }));
-      console.log(Book);
-  });
+  )
+});
 
 
 router.delete("/:id", (req, res) => {
-  console.log(req.params);
+  console.log(req.params.id);
   Book  
-    // .findByIdAndDelete(req.params._id)
-      .findOneAndDelete({id: req.params._id})
+    .findByIdAndDelete(req.params.id)
+      // .findOneAndDelete({id: req.params._id})
     .then(() => {
       res.status(204).json({ message: 'success' });
     })

@@ -7,14 +7,14 @@ function getAndDisplayBooks() {
     console.log(books);
     for (let i = 0; i < books.books.length; i++) {
       $('.bookList').append(
-        '<div class="new-book">' +
+        '<div class="new-book" id=' + books.books[i]._id + '>'  +
           '<p>' + books.books[i].title + " by " + books.books[i].author + '</p>' + 
           '<p>' + "Genre: " +  books.books[i].genre + '</p>' +
           '<p>' + "Goal: " + books.books[i].goalPages + " pages " + " or " +  books.books[i].goalChapters + " chapters " + '</p>' +
           '<button type="button" class="updateButton" role="button"><i class="material-icons">create</i></button>' +
           '<button type="button" class="deleteButton" role="button"><i class="material-icons">delete</></button>' +
         '</div>');
-        document.querySelector(".new-book").setAttribute("id", books.books[i]._id);
+        // document.querySelector(".new-book").setAttribute("id", books.books[i]._id);
     } 
   });
 }
@@ -69,51 +69,77 @@ function handleBooksDelete() {
 }
 
 // PUT request for book
+// function updateBook(book) {
+//   console.log("updating book `" + book.id + "`");
+//   $.ajax({
+//     url: BOOK_URL + "/" + id,
+//     method: "PUT",
+//     data: book,
+//     success: function(data) {
+//       getAndDisplayBooks();
+//     }
+//   });
+// }
+
 function updateBook(book) {
-  let id = updatedBook.id;
-  console.log(updateBook.id);
+  console.log("updating book `" + book.id + "`");
   $.ajax({
-    url: BOOK_URL + "/" + id,
-    method: "PATCH",
-    data: JSON.stringify(updatedBook),
+    url: BOOK_URL + "/" + book.id,
+    method: "PUT",
+    data: JSON.stringify(book),
     success: function(data) {
       getAndDisplayBooks();
-      console.log("working");
     },
     dataType: "json",
     contentType: "application/json"
   });
-  console.log("now");
-  // window.location.href = "/";
 }
+    
+function handleBooksUpdate() {
+  $(".update-form").on("submit", function(e) {
+    e.preventDefault();
+    let updateFormData = {
+      id: bookId,
+      title: $('input[name="title"]').val(),
+      author: $('input[name="author"]').val(),
+      genre: $('input[name="genre"]').val(),
+      goalPages: $('input[name="goalPages"]').val(),
+      goalChapters: $('input[name="goalChapters"]').val(),
+    };
+    updateBook(updateFormData);
+  })
+}
+    // function updateBook(book) {
+//   let id = updatedBook.id;
+//   console.log(updateBook.id);
+//   $.ajax({
+//     url: BOOK_URL + "/" + id,
+//     method: "PATCH",
+//     data: JSON.stringify(updatedBook),
+//     success: function(data) {
+//       getAndDisplayBooks();
+//       console.log("working");
+//     },
+//     dataType: "json",
+//     contentType: "application/json"
+//   });
+//   console.log("now");
+//   // window.location.href = "/";
+// }
 
 // event handler for update button on form submission
-function handleBooksUpdate() {
-  $(".update-form").on("click", ".updatingButton", function(e) {
-    e.preventDefault();
-    updateBook({
-      title: updatedBook.title,
-      author: updatedBook.author,
-      genre: updatedBook.genre,
-      goalPages: updatedBook.goalPages,
-      goalChapters: updatedBook.goalChapters
-    });
-  });
-  //     $(e.currentTarget)
-  //     .closest(".new-book")
-  //     .attr("id")
-  //   )
-  //   const book = document.getElementsByClassName('new-book');
-  //   const id = $("#id").val(); 
-  //   const books = {};
-  //   updatedBook.title = book.title
-  //   updatedBook.author = book.author
-  //   updatedBook.genre = book.genre
-  //   updatedBook.goalPages = $("#pages").val();
-  //   updatedBook.goalChapters = $("#chapters").val();
-  //   const updatedBooks = books.push(updatedBook);
-  // });
-};
+// function handleBooksUpdate() {
+//   $(".update-form").on("click", ".updatingButton", function(e) {
+//     e.preventDefault();
+//     updateBook({
+//       title: updatedBook.title,
+//       author: updatedBook.author,
+//       genre: updatedBook.genre,
+//       goalPages: updatedBook.goalPages,
+//       goalChapters: updatedBook.goalChapters
+//     });
+//   });
+// };
 
 //event handler for update button to pull up update form
 function handleUpdateButton() {
