@@ -60,6 +60,12 @@ router.post("/", (req, res) => {
 
 //process update form
 router.put("/:id", (req, res) => {
+  if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+    res.status(400).json({
+      error: 'Request path id and request body id values must match'
+    });
+  }
+
   const toUpdate = {};
   const updateableFields = ["title", "author", "genre", "goalPages", "goalChapters"];
   
@@ -68,7 +74,9 @@ router.put("/:id", (req, res) => {
       toUpdate[field] = req.body[field];
     }
   });
-  Book.findByIdAndUpdate(req.params.id, {$set: toUpdate}, {new: true})
+
+  Book
+    .findByIdAndUpdate(req.params.id, {$set: toUpdate}, {new: true})
     .then(book => res.status(204).end())
     .catch(err => res.status(500).json({ message: "Internal server error" }));
 });
