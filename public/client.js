@@ -67,13 +67,20 @@ function handleBooksDelete() {
     window.location.href = "/";
   })
 }
+// let updatedData = {
+//   id: bookId,
+//   title: $('input[id="title"]').val(),
+//   author: $('input[id="author"]').val(),
+//   genre: $('input[id="genre"]').val(),
+//   goalPages: $('input[id="pages"]').val(),
+//   goalChapters: $('input[id="chapters"]').val(),
+// };
+// updateBook(updatedData );
 
 function updateBook(book) {
-  // let book = ;
-  let id = $(e.target).parent().attr("id");
   console.log("updating book `" + id + "`");
   $.ajax({
-    url: BOOK_URL + "/" + id,
+    url: "localhost:5050/books/5c588a7093741ac8e591e792",
     method: "PUT",
     data: JSON.stringify(book),
     success: function(data) {
@@ -82,13 +89,12 @@ function updateBook(book) {
     dataType: "json",
     contentType: "application/json"
   });
-  window.location.href = "/";
+  // window.location.href = "/";
 }
     
 function handleBooksUpdate() {
   $("#formUpdateButton").on("submit", function(e) {
     e.preventDefault();
-    let updateFormData = {};
     let updatedData = {
       id: bookId,
       title: $('input[id="title"]').val(),
@@ -97,41 +103,9 @@ function handleBooksUpdate() {
       goalPages: $('input[id="pages"]').val(),
       goalChapters: $('input[id="chapters"]').val(),
     };
-    const allNewBooks = updateFormData.push(updatedData);
-    updateBook(updateFormData);
+    updateBook(updatedData );
   })
 }
-    // function updateBook(book) {
-//   let id = updatedBook.id;
-//   console.log(updateBook.id);
-//   $.ajax({
-//     url: BOOK_URL + "/" + id,
-//     method: "PATCH",
-//     data: JSON.stringify(updatedBook),
-//     success: function(data) {
-//       getAndDisplayBooks();
-//       console.log("working");
-//     },
-//     dataType: "json",
-//     contentType: "application/json"
-//   });
-//   console.log("now");
-//   // window.location.href = "/";
-// }
-
-// event handler for update button on form submission
-// function handleBooksUpdate() {
-//   $(".update-form").on("click", ".updatingButton", function(e) {
-//     e.preventDefault();
-//     updateBook({
-//       title: updatedBook.title,
-//       author: updatedBook.author,
-//       genre: updatedBook.genre,
-//       goalPages: updatedBook.goalPages,
-//       goalChapters: updatedBook.goalChapters
-//     });
-//   });
-// };
 
 //event handler for update button to pull up update form
 function handleUpdateButton() {

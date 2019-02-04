@@ -6,16 +6,17 @@ const mongoose = require('mongoose');
 const expect = chai.expect;
 const should = chai.should();
 
-const { app, runServer, closeServer } = require('../app');
+const { closeServer, runServer, app } = require('../app');
 const { books } = require("../models/Book");
 const Book = mongoose.model("books");
-const { TEST_DATABASE_URL, PORT } = require('../config/config');
+const { TEST_DATABASE_URL } = require('../config/config');
 
 
 chai.use(chaiHttp);
 
 function tearDownDb() {
   return new Promise((resolve, rejects) => {
+    console.warn('deleting database');
     mongoose.connection.dropDatabase()
       .then(result => resolve(result))
       .catch(err => rejects(err));
@@ -38,14 +39,12 @@ function seedBookData() {
   return Book.insertMany(seedData);
 }
 
-const databaseUrl = TEST_DATABASE_URL;
-const port = PORT;
 
 // test for connection to server
 describe('Books API resource', () => {
 
   before(function () {
-    return runServer(databaseUrl);
+    return runServer(TEST_DATABASE_URL);
   });
 
   beforeEach(function() {

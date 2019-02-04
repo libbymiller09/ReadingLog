@@ -1,5 +1,3 @@
-// import { DATABASE_URL } from './config/config';
-
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
@@ -56,16 +54,14 @@ app.use('/users', users);
 let server;
 
 // starts the server
-function runServer(DATABASE_URL) {
-  const port = PORT;
+function runServer(databaseUrl = DATABASE_URL, port = PORT) {
   return new Promise((resolve, reject) => {
-    mongoose.connect(DATABASE_URL, err => {
+    mongoose.connect(databaseUrl, err => {
       if(err) {
         return reject(err);
       }
-      server = app
-        .listen(port, () => {
-          console.log(`server running on ${port}`);
+      server = app.listen(port, () => {
+          console.log(`server running on port ${port}`);
           resolve();
         })
         .on("error", err => {
@@ -83,11 +79,10 @@ function closeServer() {
       console.log("closing server");
       server.close(err => {
         if (err) {
-          reject(err);
-          return;
+          return reject(err);
         }
         resolve();
-      })
+      });
     });
   });
 }
@@ -96,4 +91,4 @@ if (require.main === module) {
   runServer(DATABASE_URL).catch(err => console.error(err));
 };
 
-module.exports = { app, runServer, closeServer };
+module.exports = { runServer, app, closeServer };
