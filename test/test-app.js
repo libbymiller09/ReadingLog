@@ -1,14 +1,14 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const faker = require('faker');
-
 const mongoose = require('mongoose');
 
 const expect = chai.expect;
 const should = chai.should();
 
 const { app, runServer, closeServer } = require('../app');
-const { Book } = require('../models/Book');
+const { books } = require("../models/Book");
+const Book = mongoose.model("books");
 const { TEST_DATABASE_URL, PORT } = require('../config/config');
 
 
@@ -48,13 +48,13 @@ describe('Books API resource', () => {
     return runServer(databaseUrl);
   });
 
-  // beforeEach(function() {
-  //   return seedBookData();
-  // });
+  beforeEach(function() {
+    return seedBookData();
+  });
 
-  // afterEach(function() {
-  //   return tearDownDb();
-  // });
+  afterEach(function() {
+    return tearDownDb();
+  });
 
   after(function () {
     return closeServer();
