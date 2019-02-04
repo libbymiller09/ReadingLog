@@ -68,19 +68,23 @@ router.put("/:id", (req, res) => {
       toUpdate[field] = req.body[field];
     }
   });
-  Book.findByIdAndUpdate(req.params.id, {$set: toUpdate}, {new: true}
+  Book.findByIdAndUpdate(req.params.id, {$set: toUpdate}, {new: true})
     .then(book => res.status(204).end())
-    .catch(err => res.status(500).json({ message: "Internal server error" }))
-  );
+    .catch(err => res.status(500).json({ message: "Internal server error" }));
 });
 
 
 router.delete("/:id", (req, res) => {
-  console.log(req.params.id);
+  // Book  
+  //   .findByIdAndRemove(req.params.id)
+  //   .then(() => {
+  //     res.status(204).end();
+  //   });
+
   Book  
     .findByIdAndDelete(req.params.id)
-    .then(() => {
-      res.status(204).json({ message: 'success' });
+      .then(() => {
+        res.status(204).json({ message: 'success' });
     })
     .catch(err => {
       console.error(err);
