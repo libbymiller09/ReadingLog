@@ -69,7 +69,7 @@ describe('PUT endpoint', function() {
     };
     return Book
       .findOne()
-      .then(function(book) {
+      .then(book => {
         updatedbook.id = book.id;
 
         return chai.request(app)
