@@ -49,7 +49,7 @@ app.get('/', (req, res) => {
 
 // use the routes set up in 'routes' folder
 app.use('/books', books);
-app.use('/users', users);
+// app.use('/users', users);
 
 let server;
 

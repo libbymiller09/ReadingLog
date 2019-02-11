@@ -20,14 +20,18 @@
     "express-session": "^1.15.6",
     "faker": "^4.1.0",
     "flash": "^1.1.0",
+    "jsonwebtoken": "^8.4.0",
     "l": "^0.6.0",
     "m": "^1.5.1",
     "material-design-icons": "^3.0.1",
+    "method-override": "^3.0.0",
     "mongodb": "^3.1.10",
     "mongoose": "^5.4.2",
     "node": "^11.6.0",
+    "nodemon": "^1.18.10",
     "npm": "^6.5.0",
     "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0"
   },
   "devDependencies": {

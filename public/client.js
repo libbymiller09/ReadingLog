@@ -67,33 +67,37 @@ function handleBooksDelete() {
     window.location.href = "/";
   })
 }
-// let updatedData = {
-//   id: bookId,
-//   title: $('input[id="title"]').val(),
-//   author: $('input[id="author"]').val(),
-//   genre: $('input[id="genre"]').val(),
-//   goalPages: $('input[id="pages"]').val(),
-//   goalChapters: $('input[id="chapters"]').val(),
-// };
-// updateBook(updatedData );
+
+// event handler for update button to pull up update form
+function handleUpdateButton() {
+  $(".bookList").on("click", ".updateButton", function(e) {
+    e.preventDefault();
+    window.location.href = "/books/update";
+  });
+}
 
 function updateBook(book) {
   console.log("updating book `" + id + "`");
+  const id = $(e.target).parent().attr("id");
+
   $.ajax({
-    url: "localhost:5050/books/5c588a7093741ac8e591e792",
+    url: BOOK_URL + "/" + id,
     method: "PUT",
     data: JSON.stringify(book),
     success: function(data) {
       getAndDisplayBooks();
+      // console.log(book);
     },
     dataType: "json",
     contentType: "application/json"
   });
   // window.location.href = "/";
 }
-    
+  
+
 function handleBooksUpdate() {
-  $("#formUpdateButton").on("submit", function(e) {
+  $(".update-form").on("click", "#formUpdateButton", function(e) {
+    console.log("clicked");
     e.preventDefault();
     let updatedData = {
       id: bookId,
@@ -107,14 +111,6 @@ function handleBooksUpdate() {
   })
 }
 
-//event handler for update button to pull up update form
-function handleUpdateButton() {
-  $(".bookList").on("click", ".updateButton", function(e) {
-    e.preventDefault();
-    window.location.href = "/books/update";
-  });
-}
-
 //event handler for the cancel button
 function handleCancelButton() {
   $('.addForm').on("click", ".cancelButton", function(e) {
@@ -126,10 +122,10 @@ function handleCancelButton() {
 $(function() {
   getAndDisplayBooks();
   handleBooksAdd();
-
+  handleUpdateButton();
+  handleCancelButton();
   handleBooksDelete();  
   handleBooksUpdate();
   
-  handleUpdateButton();
-  handleCancelButton();
+  
 });

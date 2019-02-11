@@ -17,30 +17,9 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json( { type: "*/*" } ));
 let urlencodedParser = bodyParser.json();
 
-//add ensure authenticated once finshed to all routes for books
-// route for get request--all books page
-router.get("/", (req, res) => {
-  Book.find()
-    .then(books => {
-      res.json({ books })
-    }, (e) => {
-      res.status(400).send(e)
-    })
-});
-
 // route to add book form
 router.get("/add", (req, res) => {
   res.sendFile("add.html", { root: "./views/books/" });
-});
-
-// route to update book form
-router.get("/update", (req, res) => {
-  Book.findOne({
-    // _id: req.params.id
-    id: req.params.id
-  }).then(book => {
-    res.sendFile("update.html", { root: "./views/books/" });
-  });
 });
 
 //Post request for add form
@@ -53,20 +32,38 @@ router.post("/", (req, res) => {
    goalPages: req.body.goalPages,
    goalChapters: req.body.goalChapters
  });
- console.log(req.body);
- book.save()
+  book.save()
   res.redirect('/');
+});
+
+//add ensure authenticated once finshed to all routes for books
+// route for get request--all books page
+router.get("/", (req, res) => {
+  Book.find()
+    .then(books => {
+      res.json({ books })
+    }, (e) => {
+      res.status(400).send(e)
+    })
+});
+
+  // route to update book form
+router.get("/update", (req, res) => {
+  // Book.findOne({
+  //   // _id: req.params.id
+  //   id: req.params.id
+  // }).then(book => {
+    res.sendFile("update.html", { root: "./views/books/" });
+  // });
 });
 
 //process update form
 router.put("/:id", (req, res) => {
-  // console.log(req.params.id);
-  // if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-  //   res.status(400).json({
-  //     error: 'Request path id and request body id values must match'
-  //   });
-  // }
-  
+  if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+    res.status(400).json({
+      error: 'Request path id and request body id values must match'
+    });
+  }
   const toUpdate = {};
   const updateableFields = ["title", "author", "genre", "goalPages", "goalChapters"];
   
@@ -78,19 +75,38 @@ router.put("/:id", (req, res) => {
 
   Book
     .findByIdAndUpdate(req.params.id, {$set: toUpdate}, {new: true})
-    .then(book => res.status(204).end())
+    .then(toUpdate => res.status(204).end())
     .catch(err => res.status(500).json({ message: "Internal server error" }));
-    res.redirect('/');
+});
+
+  // GET by id request
+router.get("/:id", (req, res) => {
+  //   Book.findById(req.params.id)
+  //     .then(book => {
+  //       res.json({
+  //         id: book._id,
+  //         title: book.title,
+  //         author: book.author,
+  //         genre: book.genre,
+  //         goalPages: book.goalPages,
+  //         goalChapters: book.goalChapters
+  //       })
+  //     .catch(err => {
+  //       console.log(err);
+  //       res.status(500).json({message: 'something went wrong'})
+  //     })
+  //   });
+  // });
+  
+    // Book.findById(req.params.id)
+    //   .then(book => res.json(book.serialize()))
+    //   .catch(err => {
+    //     console.error(err);
+    //     res.status(500).json({error: 'something went wrong'});
+    //   });
   });
 
-
 router.delete("/:id", (req, res) => {
-  // Book  
-  //   .findByIdAndRemove(req.params.id)
-  //   .then(() => {
-  //     res.status(204).end();
-  //   });
-
   Book  
     .findByIdAndDelete(req.params.id)
       .then(() => {
@@ -103,6 +119,3 @@ router.delete("/:id", (req, res) => {
 });
 
 module.exports = router;
-
-
-

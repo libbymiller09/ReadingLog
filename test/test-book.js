@@ -23,6 +23,20 @@ describe('GET endpoint', function() {
         expect(res).to.have.status(200);
       })
   });
+
+  it('should GET book by id', function() {
+    let resBook;
+    return chai.request(app).get('/')
+      .then(res => {
+        expect(res).to.have.status(200);
+        // expect(res).to.be.json;
+      })
+      resBook = res.body;
+      return Book.findById(resBook.id);
+  })
+  // .then(book => {
+  //   expect(resBook.id).to.equal(book.id);
+  // });
 });
 
 describe('POST endpoint', function() {

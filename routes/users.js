@@ -1,90 +1,157 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const router = express.Router();
-const bcrypt = require('bcryptjs');
-const passport = require('passport');
+// const express = require('express');
+// const mongoose = require('mongoose');
+// const router = express.Router();
+// const bcrypt = require('bcryptjs');
+// const passport = require('passport');
 
-// load user model
-require('../models/User');
-const User = mongoose.model('users');
+// // load user model
+// require('../models/User');
+// const User = mongoose.model('users');
 
-//user login route
-router.get('/login', (req, res) => {
-  res.sendFile('login.html', { root: './views/users' });
-});
+// //user login route
+// router.get('/login', (req, res) => {
+//   res.sendFile('login.html', { root: './views/users' });
+// });
 
-//user register route
-router.get('/register', (req, res) => {
-  res.sendFile('register.html', { root: './views/users' });
-});
+// //user register route
+// router.get('/register', (req, res) => {
+//   res.sendFile('register.html', { root: './views/users' });
+// });
 
-//Login form POST
-router.post('/login', (req, res, next) => {
-  passport.authenticate('local', {
-    successRedirect: '/books',
-      failureRedirect: '/users/login',
-      failureFlash: true
-  })(req, res, next);
-});
+// const { router: localStrategy, jwtStrategy } = require('../auth');
+// passport.use(localStrategy);
+// passport.use(jwtStrategy);
 
-// register form POST
-router.post('/register', (req, res) => {
-  let errors = [];
+// const jwtAuth = passport.authenticate('jwt', {session: false});
 
-  if(req.body.password != req.body.password2){
-    errors.push({text: 'Passwords do not match'});
-  }
+// //register form POST
 
-  if(req.body.password.length < 4){
-    errors.push({text: 'Password must be at least 4 characters'});
-  }
+// // needs fixing BOTH POSTS and LOGOUT
 
-  if(errors.length > 0){
-    res.render('users/register', {
-      errors: errors,
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-      password2: req.body.password2
-    });
-  } else {
-    User.findOne({email: req.body.email})
-      .then(user => {
-        if(user){   
-          req.flash('error_msg', 'email already in use');
-          res.redirect('/users/register');
-        } else {
-          const newUser = new User ({
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password
-          });
 
-          bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-              if(err) throw err;
-              newUser.password = hash;
-              newUser.save()
-                .then(user => {
-                  req.flash('success_msg', 'You are now registered and can log in');
-                  res.redirect('/users/login');
-                })
-                .catch(err => {
-                  console.log(err);
-                  return;
-                });
-            });
-          });
-        } 
-      });
-    }
-});
+// router.post('/register', (req, res) => {
+//   const requiredFields = ['username', 'password'];
+//   const missingField = requiredFields.fine(field => !(field in req.body));
 
-// Logout the user
-router.get('/logout', (req, res) => {
-  req.logout();
-  req.flash('success_msg', 'You are logged out');
-  req.redirect('/users/login');
-});
+//   if(missingField) {
+//     return res.status(422).json({
+//       code: 422,
+//       reason: 'Validation error',
+//       message: 'missing field',
+//       location: 'missing field'
+//     });
+//   }
+//   const stringFields = ['username', 'password', 'firstName', 'lastName'];
+//   const nonStringField = stringFields.find(
+//     field => field in req.body && typeof req.body[field] !== 'string'
+//   );
 
-module.exports = router;
+//   if (nonStringField) {
+//     return res.status(422).json({
+//       code: 422,
+//       reason: 'Validation error',
+//       message: 'Incorrect field type',
+//       location: nonStringField
+//     });
+//   }
+//   const explicityTrimmedFields = ['username', 'password'];
+//   const nonTrimmedFields = explicityTrimmedFields.find(
+//     field => req.body[field].trim() !== req.body[field]
+//   );
+
+//   if (nonTrimmedFields) {
+//     return res.status(422).json({
+//       code: 422,
+//       reason: 'ValidationError',
+//       message: 'Cannot start or end with whitespace',
+//       location: nonTrimmedFields
+//     });
+//   }
+
+//   const sizedFields = {
+//     username: {
+//       min: 1
+//     },
+//     password: {
+//       min: 4,
+//       max: 72
+//     }
+//   };
+  
+//   const tooSmallField = Object.keys(sizedFields).find(
+//     field =>
+//       'min' in sizedFields[field] && 
+//         req.body[field].trim().length < sizedFields[field].min
+//   );
+
+//   const tooLargeField = Object.keys(sizedFields).find(
+//     field =>
+//       'max' in sizedFields[field] && 
+//         req.body[field].trim().length > sizedFields[field].max
+//   );
+
+//   if (tooSmallField || tooLargeField) {
+//     return res.status(422).json({
+//       code: 422,
+//       reason: 'ValidationError',
+//       message: tooSmallField
+//         ? `Must be at least ${sizedFields[tooSmallField].min} characters long`
+//         : `Must be at most ${sizedFields[tooLargeField].max} characters long`,
+//       location: tooSmallField || tooLargeField
+//     });
+//   }
+
+//   let {username, password, firstName = '', lastName = '', email} = req.body;
+//   firstName = firstName.trim();
+//   lastName = lastName.trim();
+
+//   return User.find({username})
+//     .count()
+//     .then(count => {
+//       if (count > 0) {
+//         return Promise.reject({
+//           code: 422,
+//           reason: 'ValidationError',
+//           message: 'Username is already taken',
+//           location: 'username'
+//         });
+//       }
+//       return User.hashPassword(password);
+//     })
+//     .then(hash => {
+//       return User.create({
+//         username,
+//         password: hash,
+//         firstName,
+//         lastName,
+//         email
+//       });
+//     })
+//     .then(user => {
+//       return res.status(201).json(user.serialize());
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       if (err.reason === 'ValidationError') {
+//         return res.status(err.code).json(err);
+//       }
+//       res.status(500).json({code: 500, message: 'Internal server error'});
+//     });
+// });
+
+
+// // login form POST
+// router.post('/login', (req, res) => {
+  
+// });
+
+
+
+// // // Logout the user
+// // router.get('/logout', (req, res) => {
+// //   req.logout();
+// //   req.flash('success_msg', 'You are logged out');
+// //   req.redirect('/users/login');
+// // });
+
+// module.exports = router;
