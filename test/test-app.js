@@ -47,13 +47,13 @@ describe('Books API resource', () => {
     return runServer(TEST_DATABASE_URL);
   });
 
-  beforeEach(function() {
-    return seedBookData();
-  });
+  // beforeEach(function() {
+  //   return seedBookData();
+  // });
 
-  afterEach(function() {
-    return tearDownDb();
-  });
+  // afterEach(function() {
+  //   return tearDownDb();
+  // });
 
   after(function () {
     return closeServer();
