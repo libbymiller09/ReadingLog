@@ -86,19 +86,18 @@ function updateBook(book) {
     data: JSON.stringify(book),
     success: function(data) {
       getAndDisplayBooks();
-      // console.log(book);
+      console.log(book);
     },
     dataType: "json",
     contentType: "application/json"
   });
-  // window.location.href = "/";
 }
   
 
 function handleBooksUpdate() {
-  $(".update-form").on("click", "#formUpdateButton", function(e) {
-    console.log("clicked");
+  $("#formUpdateButton").on("click", (function(e) {
     e.preventDefault();
+    console.log('update button');
     let updatedData = {
       id: bookId,
       title: $('input[id="title"]').val(),
@@ -109,7 +108,7 @@ function handleBooksUpdate() {
     };
     updateBook(updatedData );
   })
-}
+)}
 
 //event handler for the cancel button
 function handleCancelButton() {
@@ -126,6 +125,4 @@ $(function() {
   handleCancelButton();
   handleBooksDelete();  
   handleBooksUpdate();
-  
-  
 });
