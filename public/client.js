@@ -76,17 +76,16 @@ function handleUpdateButton() {
   });
 }
 
-function updateBook(book) {
+function updateBook(data) {
   console.log("updating book `" + id + "`");
   const id = $(e.target).parent().attr("id");
 
   $.ajax({
     url: BOOK_URL + "/" + id,
     method: "PUT",
-    data: JSON.stringify(book),
+    data: JSON.stringify(updatedData),
     success: function(data) {
       getAndDisplayBooks();
-      console.log(book);
     },
     dataType: "json",
     contentType: "application/json"
@@ -98,15 +97,15 @@ function handleBooksUpdate() {
   $("#formUpdateButton").on("click", (function(e) {
     e.preventDefault();
     console.log('update button');
-    let updatedData = {
-      id: bookId,
-      title: $('input[id="title"]').val(),
-      author: $('input[id="author"]').val(),
-      genre: $('input[id="genre"]').val(),
-      goalPages: $('input[id="pages"]').val(),
-      goalChapters: $('input[id="chapters"]').val(),
-    };
-    updateBook(updatedData );
+    let data = {};
+      updatedData.id = book.id,
+      updatedData.title = $('#title').val();
+      updatedData.author = $('#author').val();
+      updatedData.genre = $('#genre').val();
+      updatedData.goalPages = $('#pages').val();
+      updatedData.goalChapters = $('#chapters').val();
+      const updatedBook = data.push(updatedData);
+      updateBook(data);
   })
 )}
 
