@@ -1,3 +1,4 @@
+
 const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
@@ -21,6 +22,17 @@ let urlencodedParser = bodyParser.json();
 router.get("/add", (req, res) => {
   res.sendFile("add.html", { root: "./views/books/" });
 });
+
+// route to update book form
+router.get("/update", (req, res) => {
+  // Book.findOne({
+  //   _id: req.params.id
+  //   // id: req.params.id
+  // }).then(book => {
+    res.sendFile("update.html", { root: "./views/books/" });
+  // });
+});
+
 
 //Post request for add form
 router.post("/", (req, res) => {
@@ -47,14 +59,14 @@ router.get("/", (req, res) => {
     })
 });
 
-  // route to update book form
-router.get("/update", (req, res) => {
-  // Book.findOne({
-  //   // _id: req.params.id
-  //   id: req.params.id
-  // }).then(book => {
-    res.sendFile("update.html", { root: "./views/books/" });
-  // });
+router.get("/:id", (req, res) => {
+  Book  
+    .findById(req.params.id)
+    .then(book => res.json(book.serialize()))
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'something went wrong' });
+    });
 });
 
 //process update form
@@ -78,33 +90,6 @@ router.put("/:id", (req, res) => {
     .then(toUpdate => res.status(204).end())
     .catch(err => res.status(500).json({ message: "Internal server error" }));
 });
-
-  // GET by id request
-router.get("/:id", (req, res) => {
-  //   Book.findById(req.params.id)
-  //     .then(book => {
-  //       res.json({
-  //         id: book._id,
-  //         title: book.title,
-  //         author: book.author,
-  //         genre: book.genre,
-  //         goalPages: book.goalPages,
-  //         goalChapters: book.goalChapters
-  //       })
-  //     .catch(err => {
-  //       console.log(err);
-  //       res.status(500).json({message: 'something went wrong'})
-  //     })
-  //   });
-  // });
-  
-    // Book.findById(req.params.id)
-    //   .then(book => res.json(book.serialize()))
-    //   .catch(err => {
-    //     console.error(err);
-    //     res.status(500).json({error: 'something went wrong'});
-    //   });
-  });
 
 router.delete("/:id", (req, res) => {
   Book  

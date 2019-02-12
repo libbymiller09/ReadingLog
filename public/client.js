@@ -76,6 +76,23 @@ function handleUpdateButton() {
   });
 }
 
+
+function handleBooksUpdate() {
+  $("#formUpdateButton").on("click", (function(e) {
+    e.preventDefault();
+
+    let data = {};
+      updatedData.id = book.id,
+      updatedData.title = $('#title').val();
+      updatedData.author = $('#author').val();
+      updatedData.genre = $('#genre').val();
+      updatedData.goalPages = $('#pages').val();
+      updatedData.goalChapters = $('#chapters').val();
+      const updatedBook = data.push(updatedData);
+      updateBook(data);
+  })
+)}
+
 function updateBook(data) {
   console.log("updating book `" + id + "`");
   const id = $(e.target).parent().attr("id");
@@ -91,23 +108,6 @@ function updateBook(data) {
     contentType: "application/json"
   });
 }
-  
-
-function handleBooksUpdate() {
-  $("#formUpdateButton").on("click", (function(e) {
-    e.preventDefault();
-    console.log('update button');
-    let data = {};
-      updatedData.id = book.id,
-      updatedData.title = $('#title').val();
-      updatedData.author = $('#author').val();
-      updatedData.genre = $('#genre').val();
-      updatedData.goalPages = $('#pages').val();
-      updatedData.goalChapters = $('#chapters').val();
-      const updatedBook = data.push(updatedData);
-      updateBook(data);
-  })
-)}
 
 //event handler for the cancel button
 function handleCancelButton() {
