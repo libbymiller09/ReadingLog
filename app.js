@@ -5,27 +5,30 @@ const bodyParser = require('body-parser');
 
 const {DATABASE_URL, PORT} = require('./config/config');
 
+const app = express();
+
 const mongoose = require('mongoose');
+const mongoDB = 'mongodb://libbymiller:pirate22@ds155097.mlab.com:55097/readerslog-db';
+mongoose.connect(mongoDB, { useNewUrlParser:true});
 mongoose.Promise = global.Promise;
-mongoose.connect(DATABASE_URL);
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error'));
 
 const passport = require('passport');
 
 //load routes
 const books = require('./routes/books');
 const users = require('./routes/users');
-const app = express();
 
 
 //passport configuration
 require('./config/passport')(passport);
 
-// mongoose.Promise = global.Promise;
-let uri = 'mongodb://libbymiller:pirate22@ds155097.mlab.com:55097/readerslog-db';
-//connect to database 
-mongoose.connect(uri)
-  .then(() => console.log('mongodb connected'))
-  .catch(err => console.log(err));
+// const uri = 'mongodb://libbymiller:pirate22@ds155097.mlab.com:55097/readerslog-db';
+// //connect to database 
+// mongoose.connect(uri)
+//   .then(() => console.log('mongodb connected'))
+//   .catch(err => console.log(err));
 
   //middleware for the bodyparser
 app.use(bodyParser.urlencoded({ extended: false }))

@@ -14,6 +14,39 @@ const { TEST_DATABASE_URL } = require('../config/config');
 
 chai.use(chaiHttp);
 
+describe('/about endpoint', function() {
+  it('should verifty user has reached the about page', function() {
+    return chai.request(app)
+    .get('/about')
+    .then(res => {
+      expect(res).to.be.html;
+      expect(res).to.have.status(200);
+    });
+  });
+});
+
+describe('/add endpoint', function() {
+  it('should verifty user has reached the add page', function() {
+    return chai.request(app)
+    .get('/add')
+    .then(res => {
+      expect(res).to.be.html;
+      expect(res).to.have.status(200);
+    });
+  });
+});
+
+describe('/update endpoint', function() {
+  it('should verifty user has reached the update page', function() {
+    return chai.request(app)
+    .get('/update')
+    .then(res => {
+      expect(res).to.be.html;
+      expect(res).to.have.status(200);
+    });
+  });
+});
+
 describe('GET endpoint', function() {
   it('Should return all books', function() {
     let res;
