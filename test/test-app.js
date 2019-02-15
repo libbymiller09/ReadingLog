@@ -14,6 +14,7 @@ const { TEST_DATABASE_URL } = require('../config/config');
 
 chai.use(chaiHttp);
 
+// tears down testing database after each test
 function tearDownDb() {
   return new Promise((resolve, rejects) => {
     console.warn('deleting database');
@@ -23,7 +24,7 @@ function tearDownDb() {
   });
 }
 
-//function to generate random data for testing
+// function to generate random data for testing
 function seedBookData() {
   console.info('seeding book data');
   const seedData = [];

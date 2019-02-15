@@ -1,4 +1,3 @@
-
 const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
@@ -25,19 +24,20 @@ router.get("/add", (req, res) => {
 
 // route to update book form
 router.get("/update", (req, res) => {
-  // Book.findOne({
-  //   _id: req.params.id
-  //   // id: req.params.id
-  // }).then(book => {
+  Book.findOne({
+    _id: req.params.id
+    // id: req.params.id
+  }).then(book => {
     res.sendFile("update.html", { root: "./views/books/" });
-  // });
+  });
 });
 
 //route to landing page
 router.get('/about', (req, res) => {
   res.sendFile('about.html', { root: './views/books/' });
 });
-//Post request for add form
+
+//POST request for add form
 router.post("/", (req, res) => {
   
  const book = new Book({
@@ -51,8 +51,7 @@ router.post("/", (req, res) => {
   res.redirect('/');
 });
 
-//add ensure authenticated once finshed to all routes for books
-// route for get request--all books page
+// GET all books request
 router.get("/", (req, res) => {
   Book.find()
     .then(books => {
@@ -62,6 +61,7 @@ router.get("/", (req, res) => {
     })
 });
 
+// GET by id request
 router.get("/:id", (req, res) => {
   Book  
     .findById(req.params.id)
@@ -72,13 +72,14 @@ router.get("/:id", (req, res) => {
     });
 });
 
-//process update form
+// PUT request
 router.put("/:id", (req, res) => {
-  if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-    res.status(400).json({
-      error: 'Request path id and request body id values must match'
-    });
-  }
+  console.log(req.params.id);
+  // if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+  //   res.status(400).json({
+  //     error: 'Request path id and request body id values must match'
+  //   });
+  // }
   const toUpdate = {};
   const updateableFields = ["title", "author", "genre", "goalPages", "goalChapters"];
   
@@ -94,6 +95,7 @@ router.put("/:id", (req, res) => {
     .catch(err => res.status(500).json({ message: "Internal server error" }));
 });
 
+// DELETE request
 router.delete("/:id", (req, res) => {
   Book  
     .findByIdAndDelete(req.params.id)

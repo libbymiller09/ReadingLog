@@ -1,5 +1,5 @@
-const serverBase = "//localhost:5050/";
-const BOOK_URL = serverBase + "books";
+// const serverBase = "//localhost:5050/";
+// const BOOK_URL = serverBase + "books";
 
 // main GET request to display all the current books
 function getAndDisplayBooks() {
@@ -14,7 +14,6 @@ function getAndDisplayBooks() {
           '<button type="button" class="updateButton" role="button"><i class="material-icons">create</i></button>' +
           '<button type="button" class="deleteButton" role="button"><i class="material-icons">delete</></button>' +
         '</div>');
-        // document.querySelector(".new-book").setAttribute("id", books.books[i]._id);
     } 
   });
 }
@@ -36,7 +35,7 @@ function addBooks(book) {
   });
 }
 
-//event handler for submit of add form
+// event handler for submit of add form
 function handleBooksAdd() {
   $("#addButton").on("submit", (function(e) {
     e.preventDefault();
@@ -51,8 +50,7 @@ function handleBooksAdd() {
   );
 }
 
-//DELETE request
-//event handler for the delete button
+//DELETE request and event handler for delete button
 function handleBooksDelete() {
   $(".bookList").on("click", ".deleteButton", function(e) {
     e.preventDefault();
@@ -69,7 +67,7 @@ function handleBooksDelete() {
   })
 }
 
-// event handler for update button to pull up update form
+// event handler on list to pull up update form
 function handleUpdateButton() {
   $(".bookList").on("click", ".updateButton", function(e) {
     e.preventDefault();
@@ -77,7 +75,7 @@ function handleUpdateButton() {
   });
 }
 
-
+// event handler for update form 
 function handleBooksUpdate() {
   $("#formUpdateButton").on("click", (function(e) {
     e.preventDefault();
@@ -94,6 +92,7 @@ function handleBooksUpdate() {
   })
 )}
 
+// PUT request to update a book
 function updateBook(data) {
   console.log("updating book `" + id + "`");
   const id = $(e.target).parent().attr("id");

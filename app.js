@@ -7,6 +7,7 @@ const {DATABASE_URL, PORT} = require('./config/config');
 
 const app = express();
 
+// connection to database
 const mongoose = require('mongoose');
 const mongoDB = 'mongodb://libbymiller:pirate22@ds155097.mlab.com:55097/readerslog-db';
 mongoose.connect(mongoDB, { useNewUrlParser:true});
@@ -20,15 +21,8 @@ const passport = require('passport');
 const books = require('./routes/books');
 const users = require('./routes/users');
 
-
 //passport configuration
 require('./config/passport')(passport);
-
-// const uri = 'mongodb://libbymiller:pirate22@ds155097.mlab.com:55097/readerslog-db';
-// //connect to database 
-// mongoose.connect(uri)
-//   .then(() => console.log('mongodb connected'))
-//   .catch(err => console.log(err));
 
   //middleware for the bodyparser
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -51,6 +45,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //index.html route--main page load
+// NEED TO CHANGE?? CHANGE TO LANDING PAGE =>>>>>>>>>>>>>>>>>>>>>
 app.get('/', (req, res) => {
   res.sendFile(__dirname + "/views/index.html");
   console.log('rendered page successfully');
