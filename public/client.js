@@ -3,7 +3,7 @@ const BOOK_URL = serverBase + "books";
 
 // main GET request to display all the current books
 function getAndDisplayBooks() {
-  $.getJSON(BOOK_URL, function(books) {
+  $.getJSON('/books', function(books) {
     console.log(books);
     for (let i = 0; i < books.books.length; i++) {
       $('.bookList').append(
@@ -26,7 +26,7 @@ function addBooks(book) {
 
   $.ajax({
     method: "POST",
-    url: BOOK_URL,
+    url: '/books/add',
     data: JSON.stringify(book),
     success: function(data) {
       getAndDisplayBooks();
@@ -60,7 +60,8 @@ function handleBooksDelete() {
     const id = $(e.target).parent().attr("id");
 
     $.ajax({
-      url: BOOK_URL + "/" + id,
+      url: '/books/' + id,
+      // url: BOOK_URL + "/" + id,
       method: "DELETE",
       success: console.log('book deleted')
     });
@@ -98,7 +99,8 @@ function updateBook(data) {
   const id = $(e.target).parent().attr("id");
 
   $.ajax({
-    url: BOOK_URL + "/" + id,
+    url: '/books/' + id,
+    // url: BOOK_URL + "/" + id,
     method: "PUT",
     data: JSON.stringify(updatedData),
     success: function(data) {
