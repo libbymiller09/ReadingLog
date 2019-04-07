@@ -3,7 +3,7 @@
 
 // main GET request to display all the current books
 function getAndDisplayBooks() {
-  $.getJSON('/books', function(books) {
+  $.getJSON('/books/list', function(books) {
     console.log(books);
     for (let i = 0; i < books.books.length; i++) {
       $('.bookList').append(
@@ -63,7 +63,7 @@ function handleBooksDelete() {
       method: "DELETE",
       success: console.log('book deleted')
     });
-    window.location.href = "/";
+    window.location.href = "/books/list";
   })
 }
 
@@ -114,7 +114,7 @@ function updateBook(data) {
 function handleCancelButton() {
   $('.addForm').on("click", ".cancelButton", function(e) {
     event.preventDefault();
-    window.location.href = "/"
+    window.location.href = "book/list"
   });
 }
 

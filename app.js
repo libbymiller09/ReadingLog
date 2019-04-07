@@ -44,10 +44,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-//index.html route--main page load
-// NEED TO CHANGE?? CHANGE TO LANDING PAGE =>>>>>>>>>>>>>>>>>>>>>
+//about.html route--main page load
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + "/views/index.html");
+  res.sendFile(__dirname + "/views/books/about.html");
   console.log('rendered page successfully');
 });
 

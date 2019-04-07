@@ -33,12 +33,12 @@ router.get("/update", (req, res) => {
 });
 
 //route to landing page
-router.get('/about', (req, res) => {
-  res.sendFile('about.html', { root: './views/books/' });
-});
+// router.get('/', (req, res) => {
+//   res.sendFile('about.html', { root: './views/books/' });
+// });
 
 //POST request for add form
-router.post("/", (req, res) => {
+router.post("/list", (req, res) => {
   
  const book = new Book({
    title: req.body.title,
@@ -48,11 +48,16 @@ router.post("/", (req, res) => {
    goalChapters: req.body.goalChapters
  });
   book.save()
-  res.redirect('/');
+  res.redirect('/list');
 });
 
+// route to books list page
+// router.get('/list', (req, res) => {
+//   res.sendFile('index.html', { root: './views' });
+// });
+
 // GET all books request
-router.get("/", (req, res) => {
+router.get("/list", (req, res) => {
   Book.find()
     .then(books => {
       res.json({ books })
@@ -62,7 +67,7 @@ router.get("/", (req, res) => {
 });
 
 // GET by id request
-router.get("/:id", (req, res) => {
+router.get("/list/:id", (req, res) => {
   Book  
     .findById(req.params.id)
     .then(book => res.json(book.serialize()))
@@ -73,7 +78,7 @@ router.get("/:id", (req, res) => {
 });
 
 // PUT request
-router.put("/:id", (req, res) => {
+router.put("/list/:id", (req, res) => {
   console.log(req.params.id);
   // if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
   //   res.status(400).json({
@@ -95,8 +100,15 @@ router.put("/:id", (req, res) => {
     .catch(err => res.status(500).json({ message: "Internal server error" }));
 });
 
+// PATCH request
+// router.patch('/:id', (req, res) => {
+//   let updatedObject = req.body;
+//   let id = req.params.id;
+//   db.books.update({_id : ObjectId(id)}, {$set: updatedObject});
+// });
+
 // DELETE request
-router.delete("/:id", (req, res) => {
+router.delete("/list/:id", (req, res) => {
   Book  
     .findByIdAndDelete(req.params.id)
       .then(() => {
