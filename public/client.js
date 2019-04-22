@@ -3,16 +3,17 @@
 
 // main GET request to display all the current books
 function getAndDisplayBooks() {
-  $.getJSON('/books/list', function(books) {
+  $.getJSON('/books/', function(books) {
     console.log(books);
     for (let i = 0; i < books.books.length; i++) {
       $('.bookList').append(
         '<div class="new-book" id=' + books.books[i]._id + '>'  +
           '<p>' + books.books[i].title + " by " + books.books[i].author + '</p>' + 
           '<p>' + "Genre: " +  books.books[i].genre + '</p>' +
-          '<p>' + "Goal: " + books.books[i].goalPages + " pages " + " or " +  books.books[i].goalChapters + " chapters " + '</p>' +
           '<button type="button" class="updateButton" role="button"><i class="material-icons">create</i></button>' +
-          '<button type="button" class="deleteButton" role="button"><i class="material-icons">delete</></button>' +
+          '<button type="button" class="deleteButton" role="button"><i class="material-icons">delete</i></button>' +
+          '<p>' + "Goal: " + books.books[i].goalPages + " pages " + " or " +  books.books[i].goalChapters + " chapters " + '</p>' +
+          '<div id="border"></div>' + 
         '</div>');
     } 
   });
@@ -21,12 +22,12 @@ function getAndDisplayBooks() {
 // POST request to add a new book
 function addBooks(book) {
   let item = $('js-query');
-  let book = {item: item.val()};
+  let thisBook = {item: item.val()};
 
   $.ajax({
     method: "POST",
     url: '/books/add',
-    data: JSON.stringify(book),
+    data: JSON.stringify(thisBook),
     success: function(data) {
       getAndDisplayBooks();
     },
@@ -63,7 +64,7 @@ function handleBooksDelete() {
       method: "DELETE",
       success: console.log('book deleted')
     });
-    window.location.href = "/books/list";
+    window.location.href = "/books/add";
   })
 }
 
@@ -111,18 +112,22 @@ function updateBook(data) {
 }
 
 //event handler for the cancel button
+// instead of redirecting page make this button clear form
 function handleCancelButton() {
-  $('.addForm').on("click", ".cancelButton", function(e) {
-    event.preventDefault();
-    window.location.href = "book/list"
+  const cancelButton = document.getElementById("cancelButton");
+
+  cancelButton.addEventListener("click", function() {
+    window.location.href = "/books/add"
   });
 }
+
+
 
 $(function() {
   getAndDisplayBooks();
   handleBooksAdd();
   handleUpdateButton();
-  handleCancelButton();
   handleBooksDelete();  
   handleBooksUpdate();
+  handleCancelButton();
 });

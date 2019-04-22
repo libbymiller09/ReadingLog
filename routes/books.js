@@ -32,13 +32,19 @@ router.get("/update", (req, res) => {
   });
 });
 
-//route to landing page
-// router.get('/', (req, res) => {
-//   res.sendFile('about.html', { root: './views/books/' });
-// });
+// GET all books request
+router.get("/", (req, res) => {
+  Book.find()
+    .then(books => {
+      res.json({ books })
+    }, (e) => {
+      res.status(400).send(e)
+    })
+});
+
 
 //POST request for add form
-router.post("/list", (req, res) => {
+router.post("/", (req, res) => {
   
  const book = new Book({
    title: req.body.title,
@@ -48,26 +54,11 @@ router.post("/list", (req, res) => {
    goalChapters: req.body.goalChapters
  });
   book.save()
-  res.redirect('/list');
-});
-
-// route to books list page
-// router.get('/list', (req, res) => {
-//   res.sendFile('index.html', { root: './views' });
-// });
-
-// GET all books request
-router.get("/list", (req, res) => {
-  Book.find()
-    .then(books => {
-      res.json({ books })
-    }, (e) => {
-      res.status(400).send(e)
-    })
+  res.redirect('/books/add');
 });
 
 // GET by id request
-router.get("/list/:id", (req, res) => {
+router.get("/:id", (req, res) => {
   Book  
     .findById(req.params.id)
     .then(book => res.json(book.serialize()))
@@ -78,7 +69,7 @@ router.get("/list/:id", (req, res) => {
 });
 
 // PUT request
-router.put("/list/:id", (req, res) => {
+router.put("/:id", (req, res) => {
   console.log(req.params.id);
   // if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
   //   res.status(400).json({
@@ -100,15 +91,8 @@ router.put("/list/:id", (req, res) => {
     .catch(err => res.status(500).json({ message: "Internal server error" }));
 });
 
-// PATCH request
-// router.patch('/:id', (req, res) => {
-//   let updatedObject = req.body;
-//   let id = req.params.id;
-//   db.books.update({_id : ObjectId(id)}, {$set: updatedObject});
-// });
-
 // DELETE request
-router.delete("/list/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
   Book  
     .findByIdAndDelete(req.params.id)
       .then(() => {

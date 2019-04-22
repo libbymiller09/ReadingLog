@@ -10,137 +10,36 @@ nav {
   border-radius: 5px;
 }
 
-body {
-  background: #83a4d4;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #b6fbff, #83a4d4); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
-}
 
-form h2, h3 {
+h2 {
   background: #4b6cb7;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #182848, #4b6cb7);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #182848, #4b6cb7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border-radius: 5px;
 }
 
-
-/* nav {
-  background-color: #0EABE1;
-  margin: 0;
-  overflow: hidden;
-  color: white;
-}
-
-.navTabs {
-  width: 100%;
-}
-
-.navTabs li {
-  list-style-type: none;
-  display: inline;
-  margin: 20px;
-}
-
-.navTabs li a {
-  text-decoration: none;
-  color: white;
-}
- 
-.navTabs li a:hover {
-}
-
-.navBarImage {
-  width: 80%;
-  margin: 0 auto;
-}
-
-nav img {
-  width: 100%;
-}
-
-nav h1 {
-  text-align: center;
-  font-size: 24px; 
-}
-
-form {
-  margin: 0 auto;
-}
-
-form h2, h3 {
-  font-size: 18px;
-  text-align: center;
-  padding: 8px;
-  background-color: #1CCD7D;
-  color: white;
-}
-
-fieldset {
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.js-query {
-  border-radius: 5px; 
-  margin: 5px;
-}
-
-label, input {
-  display: inline-block;
-}
-
-label {
-  width: 30%;
-  text-align: right;
-  color: #3A403D;
-}
-
-label + input {
-  width: 30%;
-  margin: 0 30% 0 4%;
-}
-
-.js-query {
-  padding: 4px;
-  width: 150px;
-}
-
-button {
-  border-radius: 10px;
-  padding: 7px;
-  margin: 3px;
-  width: 100px;
-}
-
-#addButton {
-  float: left;
-}
-
-#cancelButton {
-  float: right;
-}
-
-#updateButton {
-  float: left;
-} */
-
-/* .bookList {
-  width: 80%;
-  margin: 0 auto;
-} */
-
-
-.cancelButton {
-  height: 58px;
-  float: right;
-}
-
-.updatingButton {
-  float: left;
-}
-
 footer, footer a {
-  text-align: right;
-  font-size: 12px;
+  font-size: 16px;
 }
 
+footer a {
+  text-decoration: none;
+  color: darkblue;
+}
+
+footer a:hover {
+  color: white;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: #B993D6;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #8CA6DB, #B993D6);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #8CA6DB, #B993D6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+}

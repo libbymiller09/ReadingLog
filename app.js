@@ -10,7 +10,7 @@ const app = express();
 // connection to database
 const mongoose = require('mongoose');
 const mongoDB = 'mongodb://libbymiller:pirate22@ds155097.mlab.com:55097/readerslog-db';
-mongoose.connect(mongoDB, { useNewUrlParser:true});
+mongoose.connect(mongoDB, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error'));
@@ -19,10 +19,6 @@ const passport = require('passport');
 
 //load routes
 const books = require('./routes/books');
-const users = require('./routes/users');
-
-//passport configuration
-require('./config/passport')(passport);
 
   //middleware for the bodyparser
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -33,18 +29,7 @@ app.use(express.json());
 //static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-//express session middleware
-app.use(session({
-  secret: 'secret',
-  resave: true,
-  saveUninitialized: true,
-}));
-
-//passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
-
-//about.html route--main page load
+// main page load
 app.get('/', (req, res) => {
   res.sendFile(__dirname + "/views/books/about.html");
   console.log('rendered page successfully');
@@ -52,7 +37,6 @@ app.get('/', (req, res) => {
 
 // use the routes set up in 'routes' folder
 app.use('/books', books);
-// app.use('/users', users);
 
 app.use('*', function (req, res) {
   res.status(404).json({ message: 'Not Found' });

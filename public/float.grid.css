@@ -63,19 +63,23 @@ h1 {
   font-size: 20px; 
 }
 
+p, h2, h3 {
+  padding: 20px;
+  text-align: center;
+}
+
 form {
   margin: 0 auto;
 }
 
-form h2, h3 {
+form h2, .bookList h2 {
   font-size: 18px;
   text-align: center;
   padding: 8px;
-  background-color: #1CCD7D;
   color: white;
 }
 
-fieldset {
+fieldset, .bookList div {
   margin-left: 10px;
   margin-right: 10px;
   border: none;
@@ -129,23 +133,36 @@ button:hover {
   transition: all 0.3s ease 0s;
 }
 
-#addButton {
+#addButton, .updateButton {
   float: left;
 }
 
-#cancelButton {
+#cancelButton, .deleteButton {
   float: right;
   height: 58px;
 }
 
-#updateButton {
-  float: left;
+.deleteButton {
+  margin-bottom: 23px;
 }
 
 .bookList {
-  color: #3A403D;
-  width: 80%;
-  margin: 0 auto;
+  padding-bottom: 20px;
+}
+
+.bookList h2 {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#border {
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.bookList button {
+  margin-left: 23px;
+  margin-right: 23px;
 }
 
 @media only screen and (min-width: 640px) {

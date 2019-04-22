@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-const {User} = require('./User');
 
 const Schema = mongoose.Schema;
 
@@ -27,10 +26,6 @@ const BookSchema = new Schema({
   },
   goalChapters: {
     type: String,
-    required: false
-  },
-  user: {
-    type: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     required: false
   }
 });
