@@ -1,6 +1,3 @@
-// const serverBase = "//localhost:5050/";
-// const BOOK_URL = serverBase + "books";
-
 // main GET request to display all the current books
 function getAndDisplayBooks() {
   $.getJSON('/books/', function(books) {
@@ -60,7 +57,6 @@ function handleBooksDelete() {
 
     $.ajax({
       url: '/books/' + id,
-      // url: BOOK_URL + "/" + id,
       method: "DELETE",
       success: console.log('book deleted')
     });
@@ -69,59 +65,57 @@ function handleBooksDelete() {
 }
 
 // event handler on list to pull up update form
-function handleUpdateButton() {
+function handleUpdateButton(book) {
   $(".bookList").on("click", ".updateButton", function(e) {
     e.preventDefault();
+    const id = $(e.target).parent().attr("id");
+    console.log(id);
+
+    let book = {};
+      book.id = id;
+      book.title = $('#title').val();
+      book.author = $('#author').val();
+      book.genre = $('#genre').val();
+      book.goalPages = $('#pages').val();
+      book.goalChapters = $('#chapters').val(); 
+      console.log(book);
+
+    $.ajax({
+      url: '/books/' + id,
+      method: "PUT",
+      data: JSON.stringify(book),
+      success: console.log(book),
+      dataType: "json",
+      contentType: "application/json"
+    });
+    // updateBook(id);
     window.location.href = "/books/update";
   });
 }
 
 // event handler for update form 
 function handleBooksUpdate() {
-  $("#formUpdateButton").on("click", (function(e) {
+  $(".update-form").on("submit", function(e) {
     e.preventDefault();
-
-    let data = {};
-      updatedData.id = book.id,
-      updatedData.title = $('#title').val();
-      updatedData.author = $('#author').val();
-      updatedData.genre = $('#genre').val();
-      updatedData.goalPages = $('#pages').val();
-      updatedData.goalChapters = $('#chapters').val();
-      const updatedBook = data.push(updatedData);
-      updateBook(data);
-  })
-)}
+    console.log('update form submitted');
+  });
+}
 
 // PUT request to update a book
-function updateBook(data) {
-  console.log("updating book `" + id + "`");
-  const id = $(e.target).parent().attr("id");
+function updateBook(book) {
+  // console.log("updating book `" + book.id + "`");
 
-  $.ajax({
-    url: '/books/' + id,
-    // url: BOOK_URL + "/" + id,
-    method: "PUT",
-    data: JSON.stringify(updatedData),
-    success: function(data) {
-      getAndDisplayBooks();
-    },
-    dataType: "json",
-    contentType: "application/json"
-  });
+  // $.ajax({
+  //   url: '/books/' + id,
+  //   method: "PUT",
+  //   data: JSON.stringify(book),
+  //   success: function(data) {
+  //     getAndDisplayBooks();
+  //   },
+  //   dataType: "json",
+  //   contentType: "application/json"
+  // });
 }
-
-//event handler for the cancel button
-// instead of redirecting page make this button clear form
-function handleCancelButton() {
-  const cancelButton = document.getElementById("cancelButton");
-
-  cancelButton.addEventListener("click", function() {
-    window.location.href = "/books/add"
-  });
-}
-
-
 
 $(function() {
   getAndDisplayBooks();
@@ -129,5 +123,4 @@ $(function() {
   handleUpdateButton();
   handleBooksDelete();  
   handleBooksUpdate();
-  handleCancelButton();
 });

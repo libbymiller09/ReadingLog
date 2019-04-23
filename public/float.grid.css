@@ -63,16 +63,31 @@ h1 {
   font-size: 20px; 
 }
 
-p, h2, h3 {
+p, h2 {
   padding: 20px;
   text-align: center;
+}
+
+h3 {
+  padding: 5px;
+  text-align: center;
+  color: white;
+}
+
+h3 .material-icons {
+  font-size: 20px;
+  color: black;
+}
+
+h3 .material-icons:hover {
+  color: white;
 }
 
 form {
   margin: 0 auto;
 }
 
-form h2, .bookList h2 {
+form h2, h3 .bookList h2 {
   font-size: 18px;
   text-align: center;
   padding: 8px;
