@@ -10,7 +10,6 @@ const { books } = require("../models/Book");
 const Book = mongoose.model("books");
 const { TEST_DATABASE_URL } = require('../config/config');
 
-
 chai.use(chaiHttp);
 
 // tears down testing database after each test
@@ -59,7 +58,7 @@ describe('Books API resource', () => {
   });
 
   describe('app', function() {
-     it('verify that user has hit the root url, index.html', () => {
+     it('verify that user has hit the root url, about.html', () => {
       chai.request(app)
         .get('/')
         .then(res => {

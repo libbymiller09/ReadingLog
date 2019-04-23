@@ -9,42 +9,29 @@ const { app, runServer, closeServer } = require('../app');
 const { books } = require("../models/Book");
 const Book = mongoose.model("books");
 const { TEST_DATABASE_URL } = require('../config/config');
-
-
 chai.use(chaiHttp);
 
-// describe('/about endpoint', function() {
-//   it('should verifty user has reached the about page', function() {
-//     return chai.request(app)
-//     .get('/about')
-//     .then(res => {
-//       expect(res).to.be.html;
-//       expect(res).to.have.status(200);
-//     });
-//   });
-// });
+describe('/books/add endpoint', function() {
+  it('should verifty user has reached the add page', function() {
+    chai.request(app)
+        .get('/books/add')
+        .then(res => {
+          expect(res).to.be.html;
+          expect(res).to.have.status(200);
+        });
+  });
+});
 
-// describe('/add endpoint', function() {
-//   it('should verifty user has reached the add page', function() {
-//     return chai.request(app)
-//     .get('/add')
-//     .then(res => {
-//       expect(res).to.be.html;
-//       expect(res).to.have.status(200);
-//     });
-//   });
-// });
-
-// describe('/update endpoint', function() {
-//   it('should verifty user has reached the update page', function() {
-//     return chai.request(app)
-//     .get('/update')
-//     .then(res => {
-//       expect(res).to.be.html;
-//       expect(res).to.have.status(200);
-//     });
-//   });
-// });
+describe('/books/update endpoint', function() {
+  it('should verifty user has reached the update page', function() {
+    chai.request(app)
+    .get('/books/update')
+    .then(res => {
+      expect(res).to.be.html;
+      expect(res).to.have.status(200);
+    });
+  });
+});
 
 describe('GET endpoint', function() {
   it('Should return all books', function() {
@@ -61,14 +48,10 @@ describe('GET endpoint', function() {
     return chai.request(app).get('/')
       .then(res => {
         expect(res).to.have.status(200);
-        // expect(res).to.be.json;
       })
       resBook = res.body;
       return Book.findById(resBook.id);
   })
-  // .then(book => {
-  //   expect(resBook.id).to.equal(book.id);
-  // });
 });
 
 describe('POST endpoint', function() {

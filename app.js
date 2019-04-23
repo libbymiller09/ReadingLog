@@ -15,8 +15,6 @@ mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error'));
 
-const passport = require('passport');
-
 //load routes
 const books = require('./routes/books');
 
