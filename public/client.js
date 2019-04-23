@@ -64,7 +64,7 @@ function handleBooksDelete() {
   })
 }
 
-// event handler on list to pull up update form
+// event handler for put request
 function handleUpdateButton(book) {
   $(".bookList").on("click", ".updateButton", function(e) {
     e.preventDefault();
@@ -88,33 +88,8 @@ function handleUpdateButton(book) {
       dataType: "json",
       contentType: "application/json"
     });
-    // updateBook(id);
     window.location.href = "/books/update";
   });
-}
-
-// event handler for update form 
-function handleBooksUpdate() {
-  $(".update-form").on("submit", function(e) {
-    e.preventDefault();
-    console.log('update form submitted');
-  });
-}
-
-// PUT request to update a book
-function updateBook(book) {
-  // console.log("updating book `" + book.id + "`");
-
-  // $.ajax({
-  //   url: '/books/' + id,
-  //   method: "PUT",
-  //   data: JSON.stringify(book),
-  //   success: function(data) {
-  //     getAndDisplayBooks();
-  //   },
-  //   dataType: "json",
-  //   contentType: "application/json"
-  // });
 }
 
 $(function() {
@@ -122,5 +97,4 @@ $(function() {
   handleBooksAdd();
   handleUpdateButton();
   handleBooksDelete();  
-  handleBooksUpdate();
 });

@@ -26,7 +26,6 @@ router.get("/add", (req, res) => {
 router.get("/update", (req, res) => {
   Book.findOne({
     _id: req.params.id
-    // id: req.params.id
   }).then(book => {
     res.sendFile("update.html", { root: "./views/books/" });
   });
@@ -71,11 +70,6 @@ router.get("/:id", (req, res) => {
 // PUT request
 router.put("/:id", (req, res) => {
   console.log(req.params.id);
-  // if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-  //   res.status(400).json({
-  //     error: 'Request path id and request body id values must match'
-  //   });
-  // }
   const toUpdate = {};
   const updateableFields = ["title", "author", "genre", "goalPages", "goalChapters"];
   
