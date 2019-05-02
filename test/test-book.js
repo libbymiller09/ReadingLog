@@ -87,16 +87,11 @@ describe('PUT endpoint', function() {
       chai.request(app)
         .get("/books")
         .then(function(res) {
-          // updatedbook.id = res.body[0].id;
           return chai
             .request(app)
             .put(`/books/${updatedbook.id}`)
             .send(updatedbook);
         })
-        // .then(function(res) {
-        //   expect(res).to.have.status(200);
-        //   expect(res).to.be.json;
-        // })
     )
   });
 });

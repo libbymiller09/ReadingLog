@@ -92,6 +92,7 @@ function handleUpdateButton(book) {
   });
 }
 
+// functions to be ran on page load
 $(function() {
   getAndDisplayBooks();
   handleBooksAdd();

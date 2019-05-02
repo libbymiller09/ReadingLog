@@ -4,7 +4,6 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 
 const {DATABASE_URL, PORT} = require('./config/config');
-
 const app = express();
 
 // connection to database
