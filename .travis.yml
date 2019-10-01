@@ -3,7 +3,7 @@ node_js: node
 deploy:
   provider: heroku
   api_key:
-    secure: DPUVZMi+GYJlAI7WK4bnfqFasX88H54zd8lhZ4VhB7JovPbK1WmDcU4d81WlSJgd8e1Gnl3CC+QAHQH42gxOeaoTW9frtiGcd8VUspgbgfgt8c9+Ass1SI0YX0mLI8hGi7sMrqOtV7psFisxdw6spqF0w7wqRt5IpdUCJOwj3eqzHH0h+jrxjCBs8JKKtF3mcJt2yKKYDfbjbtNF4PJjkDgV05Ipgbijjw/TizcwnXjwGeBuxqzjcBd+3gRFOmjaZCexgBOkrhKbMxQvXp0v9690XLoCumN8fvfD4zJpEpwtmqhbopnVBuESt9P2LksgpEnqr6zV0dAx+h5c3e/ebHD3TfcF8edeMgyABDZgngq+aCWSkhuVGYVzpG4iYWUk60l0xKJtCWLz7bMqQ42232DQNrYY8eqTjmqz512KOowTBIEp4WMpgZyvWm85ziqiZ3hhfZ8qf7RxOfUcdgipymVj8ryknWwnO5yFJHmlv7/t64a/cHoS8mL+3irZ1QgQqMAqpjMZRb4O3FNICiU8rjmENSVszheX2S0hCeQH+5Ny9ceqzFTtinOn8AhvwtxAaAJyg3jJu5em//SjecSP+ZXq+8AAzGnUt3gpT6CTX9sAVECt/Qr82q0y917eJuNTKb/sCr2EYIPlN4YztuYYDTAcrmnvCUDyYselDiLE9AI=
+    secure: 
   app: enigmatic-mountain-72788
   on:
     repo: libbymiller09/ReadingLog
