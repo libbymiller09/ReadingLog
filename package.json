@@ -19,7 +19,7 @@
     "mongoose": "^5.4.2",
     "node": "^11.8.0",
     "nodemon": "^1.18.11",
-    "npm": "^6.5.0"
+    "npm": "^6.13.4"
   },
   "devDependencies": {
     "chai": "^4.2.0",
