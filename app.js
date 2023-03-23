@@ -8,7 +8,7 @@ const app = express();
 
 // connection to database
 const mongoose = require('mongoose');
-const mongoDB = 'mongodb://libbymiller:pirate22@ds155097.mlab.com:55097/readerslog-db';
+const mongoDB = 'mongodb://username:password@ds155097.mlab.com:55097/readerslog-db';
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
